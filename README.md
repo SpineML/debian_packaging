@@ -18,3 +18,23 @@ systems).
 SpineML-2-BRAHMS - Some scripts which take the SpineML output of SpineCreator
 and generate and compile C++ code which forms the components which BRAHMS
 executes.
+
+These scripts have been developed on Seb's laptop and are currently Seb-specific,
+meaning that if you want to run them, you'll have to review them to change from
+using Seb's signing keys to your own as well as other changes that I can't think
+of at the moment.
+
+The scripts are intended to run from:
+
+~/greenbrain/debian_packaging
+
+with the SpineCreator and SpineML_2_BRAHMS git repos checked out in:
+
+~/greenbrain/
+
+That is - checkout everything in ~/greenbrain.
+
+Now cd into ~/greenbrain/debian_packaging/brahms and run the package.sh script.
+You'll have to install a number of Debian developer packages, including pbuilder.
+
+Review the script first as it isn't going to work first time!
