@@ -1,0 +1,5 @@
+spineml-2-brahms (1.0.0-1) UNRELEASED unstable; urgency=low
+
+  * Initial release (Closes: #742517)
+
+ -- Sebastian Scott James <seb.james@sheffield.ac.uk>  Mon, 24 March 2014 23:17:00 +0000

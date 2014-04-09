@@ -1,0 +1,24 @@
+Description: Add Debian-specific default path to Namespace
+ Namespace is a directory tree shipped as an example for brahms users
+ to copy and use. For Debian, I've installed it in /var/lib/brahms.
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-24
+
+--- a/framework/engine/support/environment.cpp
++++ b/framework/engine/support/environment.cpp
+@@ -314,7 +314,13 @@
+ 			string NamespaceRoots = brahms::os::getenv("SYSTEMML_INSTALL_PATH");
+ 			//if (!NamespaceRoots.length()) ferr << E_INSTALLATION << "env var SYSTEMML_INSTALL_PATH not set";
+ 			NamespaceRoots += brahms::os::PATH_SEPARATOR;
+-			NamespaceRoots += "Namespace";
++                        NamespaceRoots += "var";
++			NamespaceRoots += brahms::os::PATH_SEPARATOR;
++                        NamespaceRoots += "lib";
++			NamespaceRoots += brahms::os::PATH_SEPARATOR;
++                        NamespaceRoots += "brahms";
++			NamespaceRoots += brahms::os::PATH_SEPARATOR;
++                        NamespaceRoots += "Namespace";
+ 			string s = gets("NamespaceRoots");
+ 			if (s.length())
+ 			{

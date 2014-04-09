@@ -1,0 +1,19 @@
+Description: Fix compiler warning in Gauge.c
+ A fix to ensure brahms compiles with gcc-4.7
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: By email to Ben Mitchinson
+Last-Update: 2014-02-21
+--- a/framework/execute/gui/Gauge.c
++++ b/framework/execute/gui/Gauge.c
+@@ -1084,8 +1084,9 @@
+ {
+ 	gw->gauge.intervalId =
+ 	  XtAppAddTimeOut(XtWidgetToApplicationContext((Widget)gw),
+-	  	gw->gauge.update * MS_PER_SEC, GaugeGetValue,
+-		(XtPointer)gw) ;
++	                  gw->gauge.update * MS_PER_SEC,
++	                  (XtTimerCallbackProc)GaugeGetValue,
++	                  (XtPointer)gw) ;
+ }
+ 
+ static	void

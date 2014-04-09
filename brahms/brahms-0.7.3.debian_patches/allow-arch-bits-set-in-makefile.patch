@@ -1,0 +1,22 @@
+--- a/makefile.brahms
++++ b/makefile.brahms
+@@ -68,7 +68,11 @@
+ ${error Unable to identify platform - modify makefile.brahms}
+ endif
+ 
++# Has the user defined ARCH_BITS?
++ifeq ($(ARCH_BITS),)
++
+ # 64-bit detection (plus define ARCH_NIX)
++# no user-specified value for ARCH_BITS, work out now.
+ ifeq ($(ARCH_OS), win)
+ POSS64=${shell echo $(PROCESSOR_ARCHITEW6432)$(PROCESSOR_IDENTIFIER) | grep 64}
+ else
+@@ -93,6 +97,7 @@
+ ARCH_BITS=$(TRUE_ARCH_BITS)
+ endif
+ 
++endif # was ARCH_BITS specified by the user?
+ 
+ # collate
+ ARCH=$(ARCH_OS)$(ARCH_BITS)

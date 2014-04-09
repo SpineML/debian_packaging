@@ -1,0 +1,957 @@
+Description: Remove -s switches on make calls
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-23
+
+--- a/components/bench/makefile
++++ b/components/bench/makefile
+@@ -11,13 +11,13 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent: header obj
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=elements SUBPATH=$(BASEPATH)/bench/elements XLOPT=\"${call ONEARG,$(PATH_TMP)/scalable.$(EXTOBJ)}\" "XDEPS=scalable.h scalable.cpp elements_monolithic.cpp"
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=operation SUBPATH=$(BASEPATH)/bench/operation
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=overhead SUBPATH=$(BASEPATH)/bench/overhead
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=elements SUBPATH=$(BASEPATH)/bench/elements XLOPT=\"${call ONEARG,$(PATH_TMP)/scalable.$(EXTOBJ)}\" "XDEPS=scalable.h scalable.cpp elements_monolithic.cpp"
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=operation SUBPATH=$(BASEPATH)/bench/operation
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=overhead SUBPATH=$(BASEPATH)/bench/overhead
+ 
+ obj:
+ ifeq ($(ARCH_NIX),1)
+--- a/components/dev/makefile
++++ b/components/dev/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,15 +42,15 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) dev
+ 	$(EMPTY_LINE)
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=cat SUBPATH=$(BASEPATH)/cat/numeric
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=index SUBPATH=$(BASEPATH)/index/numeric
+-	make -s -f ../makefile-py COMPTYPE=process NAME=eval SUBPATH=$(BASEPATH)/eval/python
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=cat SUBPATH=$(BASEPATH)/cat/numeric
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=index SUBPATH=$(BASEPATH)/index/numeric
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=eval SUBPATH=$(BASEPATH)/eval/python
+ # this one is only for testing
+-#make -s -f ../makefile-cpp COMPTYPE=process NAME=modlin_activation_leaky SUBPATH=dev/modlin/leaky
++#$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=modlin_activation_leaky SUBPATH=dev/modlin/leaky
+--- a/components/example/makefile
++++ b/components/example/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -39,7 +39,7 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # common file
+ include ../../makefile.brahms
+@@ -49,15 +49,15 @@
+ SCRIPTPATH=$(PATH_SUP_EXA)/995
+ 
+ silent : header $(SCRIPTPATH)/rabbitsandfoxes.m $(SCRIPTPATH)/brainandhead.m $(SCRIPTPATH)/simplegui.m
+-	make -s -f ../makefile-m COMPTYPE=process NAME=gui SUBPATH=$(BASEPATH)/1258/gui
+-	make -s -f ../makefile-m COMPTYPE=process NAME=rabbits SUBPATH=$(BASEPATH)/1258/rabbits
+-	make -s -f ../makefile-m COMPTYPE=process NAME=foxes SUBPATH=$(BASEPATH)/1258/foxes
+-	make -s -f ../makefile-m COMPTYPE=process NAME=brain SUBPATH=$(BASEPATH)/1258/brain
+-	make -s -f ../makefile-m COMPTYPE=process NAME=head SUBPATH=$(BASEPATH)/1258/head
+-	make -s -f ../makefile-py COMPTYPE=process NAME=rabbits SUBPATH=$(BASEPATH)/1262/rabbits
+-	make -s -f ../makefile-py COMPTYPE=process NAME=foxes SUBPATH=$(BASEPATH)/1262/foxes
+-	make -s -f ../makefile-py COMPTYPE=process NAME=brain SUBPATH=$(BASEPATH)/1262/brain
+-	make -s -f ../makefile-py COMPTYPE=process NAME=head SUBPATH=$(BASEPATH)/1262/head
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=gui SUBPATH=$(BASEPATH)/1258/gui
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=rabbits SUBPATH=$(BASEPATH)/1258/rabbits
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=foxes SUBPATH=$(BASEPATH)/1258/foxes
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=brain SUBPATH=$(BASEPATH)/1258/brain
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=head SUBPATH=$(BASEPATH)/1258/head
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=rabbits SUBPATH=$(BASEPATH)/1262/rabbits
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=foxes SUBPATH=$(BASEPATH)/1262/foxes
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=brain SUBPATH=$(BASEPATH)/1262/brain
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=head SUBPATH=$(BASEPATH)/1262/head
+ 
+ header :
+ 	$(EMPTY_LINE)
+--- a/components/gui/makefile
++++ b/components/gui/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,12 +42,12 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) gui
+ 	$(EMPTY_LINE)
+-	make -s -f makefile.process COMPTYPE=process NAME=image SUBPATH=$(BASEPATH)/image/numeric
++	$(MAKE)  -f makefile.process COMPTYPE=process NAME=image SUBPATH=$(BASEPATH)/image/numeric
+ 
+--- a/components/language/makefile
++++ b/components/language/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,14 +42,14 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) language
+ 	$(EMPTY_LINE)
+-	make -s -f ../makefile-m COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1258
+-	make -s -f ../makefile-py COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1262
+-	make -s -f ../makefile-cpp LANGC=1 COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1266
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1199
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1258
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1262
++	$(MAKE)  -f ../makefile-cpp LANGC=1 COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1266
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=process SUBPATH=$(BASEPATH)/language/1199
+--- a/components/makefile
++++ b/components/makefile
+@@ -3,26 +3,26 @@
+ include ../makefile.brahms
+ 
+ default :
+-	@make -s silent_all
++	@$(MAKE)  silent_all
+ 
+ std :
+-	@make -s silent_std
++	@$(MAKE)  silent_std
+ 
+ silent_std :
+-	make -C std.h -s
+-	make -C std -s
++	$(MAKE) -C std.h 
++	$(MAKE) -C std 
+ 
+ silent_all :
+-	make -C std.h -s
+-	make -C sets -s
+-	make -C std -s
+-	make -C test -s
+-	make -C bench -s
+-	make -C language -s
+-	make -C example -s
+-	make -C dev -s
++	$(MAKE) -C std.h 
++	$(MAKE) -C sets 
++	$(MAKE) -C std 
++	$(MAKE) -C test 
++	$(MAKE) -C bench 
++	$(MAKE) -C language 
++	$(MAKE) -C example 
++	$(MAKE) -C dev 
+ ifeq ($(NOWX),)
+-	make -C gui -s
++	$(MAKE) -C gui 
+ endif
+ 
+ 
+--- a/components/sets/makefile
++++ b/components/sets/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,11 +42,11 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) sets
+ 	$(EMPTY_LINE)
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=sets SUBPATH=$(BASEPATH)/test/sets
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=sets SUBPATH=$(BASEPATH)/test/sets
+--- a/components/std.h/makefile
++++ b/components/std.h/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,13 +42,13 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) std.h
+ 	$(EMPTY_LINE)
+-	make -s -f makefile.h NAME=data_numeric SUBPATH=$(BASEPATH)/data/numeric TGT=data.h
+-	make -s -f makefile.h NAME=data_spikes SUBPATH=$(BASEPATH)/data/spikes TGT=data.h
+-	make -s -f makefile.h NAME=util_rng SUBPATH=$(BASEPATH)/util/rng TGT=utility.h
++	$(MAKE)  -f makefile.h NAME=data_numeric SUBPATH=$(BASEPATH)/data/numeric TGT=data.h
++	$(MAKE)  -f makefile.h NAME=data_spikes SUBPATH=$(BASEPATH)/data/spikes TGT=data.h
++	$(MAKE)  -f makefile.h NAME=util_rng SUBPATH=$(BASEPATH)/util/rng TGT=utility.h
+--- a/components/std/makefile
++++ b/components/std/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,24 +42,24 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) std
+ 	$(EMPTY_LINE)
+-	make -s -f ../makefile-cpp COMPTYPE=data NAME=data_numeric SUBPATH=$(BASEPATH)/data/numeric
+-	make -s -f ../makefile-cpp COMPTYPE=data NAME=data_spikes SUBPATH=$(BASEPATH)/data/spikes
+-	make -s -f ../makefile-cpp COMPTYPE=utility NAME=util_rng SUBPATH=$(BASEPATH)/util/rng
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=random_numeric SUBPATH=$(BASEPATH)/random/numeric
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=random_spikes SUBPATH=$(BASEPATH)/random/spikes
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=math_esum SUBPATH=$(BASEPATH)/math/esum
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=math_eproduct SUBPATH=$(BASEPATH)/math/eproduct
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=source_numeric SUBPATH=$(BASEPATH)/source/numeric
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=source_spikes SUBPATH=$(BASEPATH)/source/spikes
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=resample_numeric SUBPATH=$(BASEPATH)/resample/numeric
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=resample_spikes SUBPATH=$(BASEPATH)/resample/spikes
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=data NAME=data_numeric SUBPATH=$(BASEPATH)/data/numeric
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=data NAME=data_spikes SUBPATH=$(BASEPATH)/data/spikes
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=utility NAME=util_rng SUBPATH=$(BASEPATH)/util/rng
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=random_numeric SUBPATH=$(BASEPATH)/random/numeric
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=random_spikes SUBPATH=$(BASEPATH)/random/spikes
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=math_esum SUBPATH=$(BASEPATH)/math/esum
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=math_eproduct SUBPATH=$(BASEPATH)/math/eproduct
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=source_numeric SUBPATH=$(BASEPATH)/source/numeric
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=source_spikes SUBPATH=$(BASEPATH)/source/spikes
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=resample_numeric SUBPATH=$(BASEPATH)/resample/numeric
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=resample_spikes SUBPATH=$(BASEPATH)/resample/spikes
+ 
+ test:
+-	make -s -f ../makefile-cpp COMPTYPE=data NAME=data_numeric SUBPATH=$(BASEPATH)/data/numeric
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=data NAME=data_numeric SUBPATH=$(BASEPATH)/data/numeric
+--- a/components/test/makefile
++++ b/components/test/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,23 +42,23 @@
+ 
+ # silent default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+ 	$(EMPTY_LINE)
+ 	$(HEADER_LINE) test
+ 	$(EMPTY_LINE)
+-	make -s -f ../makefile-m COMPTYPE=process NAME=rand SUBPATH=$(BASEPATH)/test/rand
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=except SUBPATH=$(BASEPATH)/test/except
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=abort SUBPATH=$(BASEPATH)/test/abort
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=hang SUBPATH=$(BASEPATH)/test/hang
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=sequence SUBPATH=$(BASEPATH)/test/sequence
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=busy SUBPATH=$(BASEPATH)/test/busy
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=listened SUBPATH=$(BASEPATH)/test/listened
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=complex SUBPATH=$(BASEPATH)/test/complex
+-	make -s -f ../makefile-cpp COMPTYPE=process NAME=complexr SUBPATH=$(BASEPATH)/test/complexr
+-	make -s -f ../makefile-py COMPTYPE=process NAME=complexp SUBPATH=$(BASEPATH)/test/complexp
++	$(MAKE)  -f ../makefile-m COMPTYPE=process NAME=rand SUBPATH=$(BASEPATH)/test/rand
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=except SUBPATH=$(BASEPATH)/test/except
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=abort SUBPATH=$(BASEPATH)/test/abort
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=hang SUBPATH=$(BASEPATH)/test/hang
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=sequence SUBPATH=$(BASEPATH)/test/sequence
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=busy SUBPATH=$(BASEPATH)/test/busy
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=listened SUBPATH=$(BASEPATH)/test/listened
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=complex SUBPATH=$(BASEPATH)/test/complex
++	$(MAKE)  -f ../makefile-cpp COMPTYPE=process NAME=complexr SUBPATH=$(BASEPATH)/test/complexr
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=complexp SUBPATH=$(BASEPATH)/test/complexp
+ 
+ test :
+-	make -s -f ../makefile-py COMPTYPE=process NAME=complexp SUBPATH=$(BASEPATH)/test/complexp
++	$(MAKE)  -f ../makefile-py COMPTYPE=process NAME=complexp SUBPATH=$(BASEPATH)/test/complexp
+--- a/framework/bindings/1258/makefile
++++ b/framework/bindings/1258/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -36,7 +36,7 @@
+ #
+ 
+ default :
+-	@make -s silent_default
++	@$(MAKE)  silent_default
+ 
+ 
+ 
+--- a/framework/bindings/1262/makefile
++++ b/framework/bindings/1262/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -36,7 +36,7 @@
+ #
+ 
+ default :
+-	@make -s silent_default
++	@$(MAKE)  silent_default
+ 
+ 
+ 
+--- a/framework/bindings/995/makefile
++++ b/framework/bindings/995/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -52,7 +52,7 @@
+ FILES_M_DST=$(addprefix $(PATH_BDG_INV_MAT)/,$(FILES_M_SRC))
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : \
+ 	header \
+--- a/framework/bindings/makefile
++++ b/framework/bindings/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -52,17 +52,17 @@
+ DIR=$(PATH_BDG_INV)
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent :
+-	make -C 995 -s
++	$(MAKE) -C 995 
+ 
+ ifeq ($(NOMATLAB), )
+-	make -C 1258 -s
++	$(MAKE) -C 1258 
+ 
+ endif
+ ifeq ($(NOPYTHON), )
+-	make -C 1262 -s
++	$(MAKE) -C 1262 
+ endif
+ 
+ 
+--- a/framework/channel/makefile
++++ b/framework/channel/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/compress/makefile
++++ b/framework/compress/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/engine/base/makefile
++++ b/framework/engine/base/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/engine/main/makefile
++++ b/framework/engine/main/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/engine/makefile
++++ b/framework/engine/makefile
+@@ -2,13 +2,13 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #
+ #	You can compile any of the flavours, using
+ #
+-#		make [gui=enable|disable] [with-x=DIR]
++#		$(MAKE) [gui=enable|disable] [with-x=DIR]
+ #
+ #	(default to gui=enable with-x=/usr/X11R6).
+ #	The with-x option is only used on Linux with gui=enable.
+@@ -49,12 +49,12 @@
+ 
+ # default
+ default :
+-	make -s silent
++	$(MAKE)  silent
+ 
+ silent :
+-	make -C base -s
+-	make -C support -s
+-	make -C systemml -s
+-	make -C main -s
++	$(MAKE) -C base 
++	$(MAKE) -C support 
++	$(MAKE) -C systemml 
++	$(MAKE) -C main 
+ 
+ 
+--- a/framework/engine/support/makefile
++++ b/framework/engine/support/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/engine/systemml/makefile
++++ b/framework/engine/systemml/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/execute/gui/makefile
++++ b/framework/execute/gui/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/execute/makefile
++++ b/framework/execute/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -146,7 +146,7 @@
+ 	$(HEADER_LINE) framework/execute
+ 	$(EMPTY_LINE)
+ 	$(call MKDIR, $(PATH_BIN))
+-	make -C gui -s
++	$(MAKE) -C gui
+ 
+ $(PATH_BIN)/brahms-execute$(EXTEXE) : main.cpp *.cpp *.h $(IF_BOTH) makefile ../../makefile.brahms $(PATH_TMP)/gui.$(EXTOBJ)
+ 	@$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS) 
+--- a/framework/makefile
++++ b/framework/makefile
+@@ -2,13 +2,13 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #
+ #	You can compile any of the flavours, using
+ #
+-#		make [gui=enable|disable] [with-x=DIR]
++#		$(MAKE) [gui=enable|disable] [with-x=DIR]
+ #
+ #	(default to gui=enable with-x=/usr/X11R6).
+ #	The with-x option is only used on Linux with gui=enable.
+@@ -53,20 +53,20 @@
+ 
+ # default
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent :
+ ifeq ($(PATH_STB),)
+ else
+-	make -C $(PATH_STB) -s
++	$(MAKE) -C $(PATH_STB) 
+ endif
+-	make -C public -s
+-	make -C media -s
+-	make -C engine -s
+-	make -C channel -s
+-	make -C compress -s
+-	make -C execute -s
+-	make -C bindings -s
++	$(MAKE) -C public 
++	$(MAKE) -C media 
++	$(MAKE) -C engine 
++	$(MAKE) -C channel 
++	$(MAKE) -C compress 
++	$(MAKE) -C execute 
++	$(MAKE) -C bindings 
+ 
+ 
+ 
+--- a/framework/media/makefile
++++ b/framework/media/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/framework/public/makefile
++++ b/framework/public/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/makefile
++++ b/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -41,47 +41,47 @@
+ 
+ 
+ 
+-# this file just allows us to add -s (silent) to make calls automatically
++# this file just allows us to add -s (silent) to $(MAKE) calls automatically
+ 
+ default :
+-	@make -s silent_help
++	@$(MAKE)  silent_help
+ 
+ frm :
+-	@make -s silent_framework
++	@$(MAKE)  silent_framework
+ 
+ std :
+-	@make -s silent_std
++	@$(MAKE)  silent_std
+ 
+ all :
+-	@make -s silent_all
++	@$(MAKE)  silent_all
+ 
+ 
+ 
+ 
+ 
+ silent_help :
+-	echo make : display this help
+-	echo make frm {OPTIONS} : make framework
+-	echo make std {OPTIONS} : make framework, std
+-	echo make all {OPTIONS} : make framework, components, support
+-	echo option : NOMPI=1 do not make the MPI layer
+-	echo option : NOWX=1 do not make components that use WX
++	echo $(MAKE) : display this help
++	echo $(MAKE) frm {OPTIONS} : make framework
++	echo $(MAKE) std {OPTIONS} : make framework, std
++	echo $(MAKE) all {OPTIONS} : make framework, components, support
++	echo option : NOMPI=1 do not $(MAKE) the MPI layer
++	echo option : NOWX=1 do not $(MAKE) components that use WX
+ 	echo option : BUILD=NOOPT do not use optimisation
+ 	echo option : BUILD=DEBUG do debug build
+ 	echo environment : ARCH $(ARCH)
+ 
+ # framework
+ silent_framework :
+-	make -C framework -s
++	$(MAKE) -C framework
+ 
+ # std
+ silent_std : silent_framework
+-	make -C components -s std
++	$(MAKE) -C components std
+ 
+ # all
+ silent_all : silent_framework
+-	make -C components -s
+-	make -C support -s
++	$(MAKE) -C components
++	$(MAKE) -C support
+ 
+ 
+ 
+--- a/makefile.brahms
++++ b/makefile.brahms
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+--- a/support/checkengine/makefile
++++ b/support/checkengine/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -90,7 +90,7 @@
+ DEPS=checkengine.cpp *.h *.cpp makefile  ../../makefile.brahms
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : header $(PATH_SUP_CHK_ENG)/README $(PATH_SUP_CHK_ENG)/check_simultaneous_use.bat $(PATH_SUP_CHK_ENG)/checkengine$(EXTEXE)
+ 
+--- a/support/docs/makefile
++++ b/support/docs/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -39,7 +39,7 @@
+ include ../../makefile.brahms
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : header $(PATH_SUP_DOC)/README
+ 
+--- a/support/makefile
++++ b/support/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -40,14 +40,14 @@
+ include ../makefile.brahms
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : header $(PATH_SUP)/README
+-	make -C docs -s
+-	make -C template -s
+-	make -C tutorial -s
++	$(MAKE) -C docs 
++	$(MAKE) -C template 
++	$(MAKE) -C tutorial 
+ ifeq ($(ARCH_OS),win)
+-	make -C checkengine -s
++	$(MAKE) -C checkengine 
+ endif
+ 
+ header :
+--- a/support/template/makefile
++++ b/support/template/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,13 +42,13 @@
+ DIR=$(PATH_SUP_TEM)
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : header $(DIR)/README
+-	make -C process/1199 -s
+-	make -C process/1266 -s
+-	make -C process/1258 -s
+-	make -C process/1262 -s
++	$(MAKE) -C process/1199 
++	$(MAKE) -C process/1266 
++	$(MAKE) -C process/1258 
++	$(MAKE) -C process/1262 
+ 
+ header :
+ 	$(EMPTY_LINE)
+--- a/support/template/process/1199/makefile
++++ b/support/template/process/1199/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1199
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : $(DIR)/component.cpp
+ 
+--- a/support/template/process/1258/makefile
++++ b/support/template/process/1258/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -45,7 +45,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1258
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : $(DIR)/component.$(LANGUAGE)
+ 
+--- a/support/template/process/1262/makefile
++++ b/support/template/process/1262/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -45,7 +45,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1262
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : $(DIR)/component.$(LANGUAGE)
+ 
+--- a/support/template/process/1266/makefile
++++ b/support/template/process/1266/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1266
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : $(DIR)/component.c
+ 
+--- a/support/tutorial/makefile
++++ b/support/tutorial/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,10 +42,10 @@
+ DIR=$(PATH_SUP_TUT)
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : header $(DIR)/README
+-	make -C system/995 -s
++	$(MAKE) -C system/995
+ 
+ header :
+ 	$(EMPTY_LINE)
+--- a/support/tutorial/system/995/makefile
++++ b/support/tutorial/system/995/makefile
+@@ -2,7 +2,7 @@
+ #
+ #	This is the platform-independent makefile for this
+ #	module. You will need to have UnxUtils installed to
+-#	make it work on Windoze:
++#	$(MAKE) it work on Windoze:
+ #
+ #		http://unxutils.sourceforge.net
+ #________________________________________________________________
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TUT)/system/995
+ 
+ default :
+-	@make -s silent
++	@$(MAKE)  silent
+ 
+ silent : \
+ 	header \

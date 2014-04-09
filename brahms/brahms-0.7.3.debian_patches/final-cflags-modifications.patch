@@ -1,0 +1,31 @@
+Description: Final CFLAGS and LDFLAGS
+ This adds in the Debian security-suitable build flags to a couple of places
+ where they'd been missed out.
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-24
+
+--- a/makefile.brahms
++++ b/makefile.brahms
+@@ -282,7 +282,7 @@
+ 	# TODO -fno-strict-aliasing is a temp fix; should compile without this sometime soon (use -fstrict-aliasing instead, to force it where it is not the default)
+ 	DEFINES=$(DEFINE_OS)
+ ifeq ($(EASY_BUILD), 1)
+-	CFLAGS=-fPIC -ffast-math $(FLAG_PTHREAD) $(FLAG_ARCH) -Wfatal-errors -fno-strict-aliasing
++	CFLAGS=-fPIC -g -Wformat -Werror=format-security -ffast-math $(FLAG_PTHREAD) $(FLAG_ARCH) -Wfatal-errors -fno-strict-aliasing -fstack-protector --param=ssp-buffer-size=4
+ else
+ 	CFLAGS=-fPIC -g -Wformat -Werror=format-security -Werror -Wall -ffast-math $(FLAG_PTHREAD) $(FLAG_ARCH) -Wfatal-errors -fno-strict-aliasing -fstack-protector --param=ssp-buffer-size=4
+ 	LDFLAGS=-Wl,-z,relro
+--- a/components/bench/makefile
++++ b/components/bench/makefile
+@@ -21,8 +21,8 @@
+ 
+ obj:
+ ifeq ($(ARCH_NIX),1)
+-	g++ -c -fPIC -O3 $(FLAG_ARCH) $(CPPFLAGS) scalable.cpp $(NAMEOBJ)${call ONEARG,$(PATH_TMP)/scalable.$(EXTOBJ)}
+-	g++ -O3 $(DEFINES) $(FLAG_ARCH) $(CPPFLAGS) -D__NIX__ elements_monolithic.cpp -o ${call ONEARG,$(PATH_TGT_BIN)} ${call ONEARG,$(PATH_TMP)/scalable.$(EXTOBJ)}
++	g++ -c -fPIC -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -O3 $(FLAG_ARCH) $(CPPFLAGS) scalable.cpp $(NAMEOBJ)${call ONEARG,$(PATH_TMP)/scalable.$(EXTOBJ)}
++	g++ -O3 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security $(DEFINES) $(FLAG_ARCH) $(CPPFLAGS) -D__NIX__ elements_monolithic.cpp -o ${call ONEARG,$(PATH_TGT_BIN)} ${call ONEARG,$(PATH_TMP)/scalable.$(EXTOBJ)} -Wl,-z,relro
+ endif
+ ifeq ($(ARCH_OS),win)
+ 	cl scalable.cpp -MD -c -EHsc -nologo -Ox $(NAMEOBJ)$(PATH_TMP)/scalable.$(EXTOBJ)

@@ -1,0 +1,17 @@
+Description: Add -fPIC next to -shared to match other compiler calls
+ Attempt to get executables hardened.
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-23
+
+--- a/makefile.brahms
++++ b/makefile.brahms
+@@ -212,7 +212,7 @@
+ 	# specifics for this NIX OS
+ 	DEFINE_OS=-D__GLN__
+ 	FLAG_PTHREAD=-pthread
+-	FLAG_SHARED=-shared
++	FLAG_SHARED=-fPIC -shared
+ 	FLAG_ARCH=
+ 
+ endif

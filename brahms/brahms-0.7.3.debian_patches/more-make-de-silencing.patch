@@ -1,0 +1,450 @@
+Description: More de-silencing of make and g++/gcc calls
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-23
+
+--- a/components/bench/makefile
++++ b/components/bench/makefile
+@@ -11,7 +11,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent: header obj
+--- a/components/dev/makefile
++++ b/components/dev/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/components/example/makefile
++++ b/components/example/makefile
+@@ -39,7 +39,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # common file
+ include ../../makefile.brahms
+--- a/components/gui/makefile
++++ b/components/gui/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/components/language/makefile
++++ b/components/language/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/components/makefile
++++ b/components/makefile
+@@ -3,10 +3,10 @@
+ include ../makefile.brahms
+ 
+ default :
+-	@$(MAKE)  silent_all
++	$(MAKE)  silent_all
+ 
+ std :
+-	@$(MAKE)  silent_std
++	$(MAKE)  silent_std
+ 
+ silent_std :
+ 	$(MAKE) -C std.h 
+--- a/components/sets/makefile
++++ b/components/sets/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/components/std.h/makefile
++++ b/components/std.h/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/components/std/makefile
++++ b/components/std/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/components/test/makefile
++++ b/components/test/makefile
+@@ -42,7 +42,7 @@
+ 
+ # silent default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ # default is to build everything
+ silent:
+--- a/framework/bindings/1258/makefile
++++ b/framework/bindings/1258/makefile
+@@ -36,7 +36,7 @@
+ #
+ 
+ default :
+-	@$(MAKE)  silent_default
++	$(MAKE)  silent_default
+ 
+ 
+ 
+@@ -63,7 +63,7 @@
+ #	Architecture-specific settings
+ 
+ ifeq ($(ARCH_OS), gln)
+-	
++
+ 	ifeq ($(ARCH_BITS), 64)
+ 		MATARCH=glnxa64
+ 	else
+@@ -82,7 +82,7 @@
+ endif
+ 
+ ifeq ($(ARCH_OS), osx)
+-	
++
+ 	ifeq ($(ARCH_BITS), 64)
+ 		MATARCH=what_is_this_supposed_to_be
+ 	else
+--- a/framework/bindings/1262/makefile
++++ b/framework/bindings/1262/makefile
+@@ -36,7 +36,7 @@
+ #
+ 
+ default :
+-	@$(MAKE)  silent_default
++	$(MAKE)  silent_default
+ 
+ 
+ 
+--- a/framework/bindings/995/makefile
++++ b/framework/bindings/995/makefile
+@@ -52,7 +52,7 @@
+ FILES_M_DST=$(addprefix $(PATH_BDG_INV_MAT)/,$(FILES_M_SRC))
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : \
+ 	header \
+--- a/framework/bindings/makefile
++++ b/framework/bindings/makefile
+@@ -52,7 +52,7 @@
+ DIR=$(PATH_BDG_INV)
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent :
+ 	$(MAKE) -C 995 
+--- a/framework/channel/makefile
++++ b/framework/channel/makefile
+@@ -122,7 +122,7 @@
+ DEPS=channel.cpp deliverer.cpp fifo.cpp *.h $(IF_BOTH) ../engine/base/*.h ../engine/support/*.h makefile ../../makefile.brahms $(PATH_TMP)/base.$(EXTOBJ)
+ 
+ $(PATH_BIN)/libbrahms-channel-sockets.$(EXTDLL) : $(DEPS) sockets*.cpp 
+-	@$(CXX) $(COPTS) -D__SOCKETS__ $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
++	$(CXX) $(COPTS) -D__SOCKETS__ $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
+ 	@rm -f \*.$(EXTOBJ)
+ ifeq ($(ARCH_NIX), 1)
+ 	@cd $(PATH_BIN); ln -sf libbrahms-channel-sockets.$(EXTDLL) libbrahms-channel-sockets.$(EXTDLL_1)
+@@ -135,7 +135,7 @@
+ 	$(SHOW_MAKING) $(notdir $(subst $(SPACE),\$(SPACE),$@))
+ 
+ $(PATH_BIN)/libbrahms-channel-mpich2.$(EXTDLL) : $(DEPS) mpi*.cpp
+-	@$(MCXX) $(COPTS) -D__MPI__ $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS) $(LOPTMPI)
++	$(MCXX) $(COPTS) -D__MPI__ $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS) $(LOPTMPI)
+ 	@rm -f \*.$(EXTOBJ)
+ ifeq ($(ARCH_NIX), 1)
+ 	@cd $(PATH_BIN); ln -sf libbrahms-channel-mpich2.$(EXTDLL) libbrahms-channel-mpich2.$(EXTDLL_1)
+--- a/framework/compress/makefile
++++ b/framework/compress/makefile
+@@ -87,7 +87,7 @@
+ DEPS=compress.cpp *.h *.cpp $(IF_CMP) makefile  ../../makefile.brahms
+ 
+ $(PATH_BIN)/libbrahms-compress.$(EXTDLL) : $(DEPS)
+-	@$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
++	$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
+ 	@rm -f \*.$(EXTOBJ)
+ ifeq ($(ARCH_NIX), 1)
+ 	@cd $(PATH_BIN); ln -sf libbrahms-compress.$(EXTDLL) libbrahms-compress.$(EXTDLL_1)
+--- a/framework/execute/gui/makefile
++++ b/framework/execute/gui/makefile
+@@ -84,12 +84,12 @@
+ 	$(call MKDIR, $(PATH_TMP))
+ 
+ $(PATH_TMP)/%.$(EXTOBJ) : %.cpp %.h makefile ../../../makefile.brahms *.h *.cpp
+-	@$(CXX) $(COPTS) -c $< $(NAMEOBJ)${call ONEARG,$@}
++	$(CXX) $(COPTS) -c $< $(NAMEOBJ)${call ONEARG,$@}
+ 	$(SHOW_MAKING) $(notdir $(subst $(SPACE),\$(SPACE),$@))
+ 
+ $(PATH_TMP)/%.$(EXTOBJ) : %.c %.h makefile ../../../makefile.brahms
+ 	$(SHOW_MAKING) $<
+-	@$(CC) -c $(COPTS) $< $(NAMEOBJ)${call ONEARG,$@}
++	$(CC) -c $(COPTS) $< $(NAMEOBJ)${call ONEARG,$@}
+ 	$(SHOW_MAKING) $(notdir $(subst $(SPACE),\$(SPACE),$@))
+ 
+ 
+--- a/framework/execute/makefile
++++ b/framework/execute/makefile
+@@ -71,7 +71,7 @@
+ 
+ 	# local (compiler switches)
+ 	COPT="-DBUILD_PLATFORM=\"$(BUILD_PLATFORM)\""
+-	
++
+ 	#-ldl -lXmu -lSM -lICE -lXext -lX11
+ 
+ 	# link to gui stuff (later, the gui module will do this)
+@@ -83,10 +83,10 @@
+ 	else
+ 		LOPTGUI=-L$(with-x)/lib -lXt -lXaw -lrt
+ 	endif
+-	
++
+ 	# link to other stuff
+ 	LOPT=$(LOPTGUI) ${call ONEARG,$(PATH_TMP)/Gauge.$(EXTOBJ)} -lbrahms-engine
+-	
++
+ 	# compiler
+ 	MCXX=mpic++
+ 
+@@ -96,7 +96,7 @@
+ 
+ 	# local (compiler switches)
+ 	COPT="-DBUILD_PLATFORM=\"$(BUILD_PLATFORM)\""
+-	
++
+ 	#-ldl -lXmu -lSM -lICE -lXext -lX11
+ 
+ 	# link to gui stuff (later, the gui module will do this)
+@@ -108,10 +108,10 @@
+ 	else
+ 		LOPTGUI=-L$(with-x)/lib -lXmu -lX11 -lXt -lXaw
+ 	endif
+-	
++
+ 	# link to other stuff
+ 	LOPT=$(LOPTGUI) ${call ONEARG,$(PATH_TMP)/Gauge.$(EXTOBJ)} -lbrahms-engine -bind_at_load
+-	
++
+ 	# compiler
+ 	MCXX=mpic++
+ 
+@@ -123,10 +123,6 @@
+ 	COPT="-DBUILD_PLATFORM=\"$(BUILD_PLATFORM)\""
+ 	LOPT=shell32.lib user32.lib gdi32.lib comctl32.lib \
+ 		${call ONEARG,$(PATH_BIN)/libbrahms-engine.lib}
+-		
+-		#\
+-		#$(PATH_BIN)/libbrahms-base.0.lib \
+-		#$(PATH_BIN)/libbrahms-gui.0.lib
+ 
+ endif
+ 
+@@ -149,7 +145,7 @@
+ 	$(MAKE) -C gui
+ 
+ $(PATH_BIN)/brahms-execute$(EXTEXE) : main.cpp *.cpp *.h $(IF_BOTH) makefile ../../makefile.brahms $(PATH_TMP)/gui.$(EXTOBJ)
+-	@$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS) 
++	$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
+ ifeq ($(ARCH_OS), win)
+ 	@rm main.obj
+ endif
+--- a/framework/makefile
++++ b/framework/makefile
+@@ -53,7 +53,7 @@
+ 
+ # default
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent :
+ ifeq ($(PATH_STB),)
+--- a/makefile
++++ b/makefile
+@@ -44,16 +44,16 @@
+ # this file just allows us to add -s (silent) to $(MAKE) calls automatically
+ 
+ default :
+-	@$(MAKE)  silent_help
++	$(MAKE)  silent_help
+ 
+ frm :
+-	@$(MAKE)  silent_framework
++	$(MAKE)  silent_framework
+ 
+ std :
+-	@$(MAKE)  silent_std
++	$(MAKE)  silent_std
+ 
+ all :
+-	@$(MAKE)  silent_all
++	$(MAKE)  silent_all
+ 
+ 
+ 
+--- a/support/checkengine/makefile
++++ b/support/checkengine/makefile
+@@ -90,7 +90,7 @@
+ DEPS=checkengine.cpp *.h *.cpp makefile  ../../makefile.brahms
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : header $(PATH_SUP_CHK_ENG)/README $(PATH_SUP_CHK_ENG)/check_simultaneous_use.bat $(PATH_SUP_CHK_ENG)/checkengine$(EXTEXE)
+ 
+@@ -110,9 +110,8 @@
+ 	cp check_simultaneous_use.bat $(PATH_SUP_CHK_ENG)/check_simultaneous_use.bat
+ 
+ $(PATH_SUP_CHK_ENG)/checkengine$(EXTEXE) : $(DEPS)
+-	@$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
++	$(CXX) $(COPTS) $< $(NAMEEXE)${call ONEARG,$@} $(LOPTS)
+ ifeq ($(ARCH_OS), win)
+ 	@rm *.obj
+ endif
+ 
+-	
+--- a/support/docs/makefile
++++ b/support/docs/makefile
+@@ -39,7 +39,7 @@
+ include ../../makefile.brahms
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : header $(PATH_SUP_DOC)/README
+ 
+--- a/support/makefile
++++ b/support/makefile
+@@ -40,7 +40,7 @@
+ include ../makefile.brahms
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : header $(PATH_SUP)/README
+ 	$(MAKE) -C docs 
+--- a/support/template/makefile
++++ b/support/template/makefile
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TEM)
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : header $(DIR)/README
+ 	$(MAKE) -C process/1199 
+--- a/support/template/process/1199/makefile
++++ b/support/template/process/1199/makefile
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1199
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : $(DIR)/component.cpp
+ 
+--- a/support/template/process/1258/makefile
++++ b/support/template/process/1258/makefile
+@@ -45,7 +45,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1258
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : $(DIR)/component.$(LANGUAGE)
+ 
+--- a/support/template/process/1262/makefile
++++ b/support/template/process/1262/makefile
+@@ -45,7 +45,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1262
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : $(DIR)/component.$(LANGUAGE)
+ 
+--- a/support/template/process/1266/makefile
++++ b/support/template/process/1266/makefile
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TEM)/process/1266
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : $(DIR)/component.c
+ 
+--- a/support/tutorial/makefile
++++ b/support/tutorial/makefile
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TUT)
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : header $(DIR)/README
+ 	$(MAKE) -C system/995
+--- a/support/tutorial/system/995/makefile
++++ b/support/tutorial/system/995/makefile
+@@ -42,7 +42,7 @@
+ DIR=$(PATH_SUP_TUT)/system/995
+ 
+ default :
+-	@$(MAKE)  silent
++	$(MAKE)  silent
+ 
+ silent : \
+ 	header \

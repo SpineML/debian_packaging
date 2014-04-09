@@ -1,0 +1,45 @@
+Name brahms
+
+Description
+
+BRAHMS is a Modular Execution Framework (MEF) for executing integrated
+systems built from component software processes (a SystemML-ready
+execution client). Its operation is conceptually similar to that of
+Simulink. Such tools allow the connection of processes together into
+systems, by linking the outputs of some processes into the inputs of
+others.
+
+BRAHMS is used by computational neuroscience and robotics researchers.
+
+
+ITP:
+
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+From: Seb James <seb.james@sheffield.ac.uk>
+To: Debian Bug Tracking System <submit@bugs.debian.org>
+Subject: ITP: spineml-2-brahms -- Convert SpineML models for execution in brahms
+Bcc: Seb James <seb.james@sheffield.ac.uk>
+X-Debbugs-Cc: debian-devel@lists.debian.org
+
+Package: wnpp
+Severity: wishlist
+Owner: Seb James <seb.james@sheffield.ac.uk>
+
+* Package name    : spineml-2-brahms
+  Version         : 1.0.0
+  Upstream Author : Alex Cope <a.cope@sheffield.ac.uk>
+* URL             : http://bimpa.group.shef.ac.uk/SpineML/index.php/Brahms
+* License         : GPL
+  Programming Lang: XSL, Bash
+  Description     : Convert SpineML models for execution in brahms
+
+spineml-2-brahms is a set of scripts which takes a neural network
+model described in the SpineML format (an XML format) and creates the
+components necessary to execute the model using the BRAHMS modular
+execution framework (http://brahms.sourceforge.net/home/).
+
+XSL scripts take the SpineML input and generate C++ Brahms component
+source code files. These files are compiled by spineml-2-brahms
+convert script.

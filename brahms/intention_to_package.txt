@@ -1,0 +1,45 @@
+Name brahms
+
+Description
+
+BRAHMS is a Modular Execution Framework (MEF) for executing integrated
+systems built from component software processes (a SystemML-ready
+execution client). Its operation is conceptually similar to that of
+Simulink. Such tools allow the connection of processes together into
+systems, by linking the outputs of some processes into the inputs of
+others.
+
+BRAHMS is used by computational neuroscience and robotics researchers.
+
+
+ITP:
+
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+From: Seb James <seb.james@sheffield.ac.uk>
+To: Debian Bug Tracking System <submit@bugs.debian.org>
+Subject: ITP: brahms -- Modular execution framework for SystemML computational models
+Bcc: Seb James <seb.james@sheffield.ac.uk>
+X-Debbugs-Cc: debian-devel@lists.debian.org
+
+Package: wnpp
+Severity: wishlist
+Owner: Seb James <seb.james@sheffield.ac.uk>
+
+* Package name    : brahms
+  Version         : 0.7.3
+  Upstream Author : Ben Mitchinson <b.mitchinson@sheffield.ac.uk>
+* URL             : http://brahms.sourceforge.net/home/
+* License         : GPL
+  Programming Lang: C++
+  Description     : Modular execution framework for SystemML computational models
+
+BRAHMS is a Modular Execution Framework (MEF) for executing integrated
+systems built from component software processes (a SystemML-ready
+execution client). Its operation is conceptually similar to that of
+Simulink. Such tools allow the connection of processes together into
+systems, by linking the outputs of some processes into the inputs of
+others.
+
+BRAHMS is used by computational neuroscience and robotics researchers.

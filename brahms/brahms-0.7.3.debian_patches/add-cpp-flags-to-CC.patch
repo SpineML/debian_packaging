@@ -1,0 +1,18 @@
+Description: Add CPPFLAGS to gcc as well as g++
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-23
+
+--- a/makefile.brahms
++++ b/makefile.brahms
+@@ -257,9 +257,9 @@
+ 	ONEARG=$(1)
+ 
+ 	# compiler
+-	CC=gcc
+ 	CPPFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden
+ 	CPPFLAGS=-D_FORTIFY_SOURCE=2
++	CC=gcc $(CPPFLAGS)
+ 	CXX=g++ $(CPPFLAGS)
+ 	NAMEEXE=-o$(SPACE)
+ 	NAMEOBJ=-o$(SPACE)

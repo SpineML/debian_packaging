@@ -1,0 +1,19 @@
+Description: Add Debian compiler flags
+ Additional Debian compiler, preprocessor and linker flags
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-22
+
+--- a/makefile.brahms
++++ b/makefile.brahms
+@@ -272,7 +272,9 @@
+ ifeq ($(EASY_BUILD), 1)
+ 	CFLAGS=-fPIC -ffast-math $(FLAG_PTHREAD) $(FLAG_ARCH) -Wfatal-errors -fno-strict-aliasing
+ else
+-	CFLAGS=-fPIC -Werror -Wall -ffast-math $(FLAG_PTHREAD) $(FLAG_ARCH) -Wfatal-errors -fno-strict-aliasing
++	CFLAGS=-fPIC -Werror -Wall -ffast-math $(FLAG_PTHREAD) $(FLAG_ARCH) -Wfatal-errors -fno-strict-aliasing -fstack-protector --param=ssp-buffer-size=4
++	CPPFLAGS=-D_FORTIFY_SOURCE=2
++	LDFLAGS=-Wl,-z,relro
+ endif
+ 
+ 	# paths

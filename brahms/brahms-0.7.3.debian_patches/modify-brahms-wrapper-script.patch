@@ -1,0 +1,24 @@
+Description: Add Debian-specific changes to brahms script
+ Adds /usr/lib/brahms to the wrapper script so that brahms-execute
+ will be able to link to the brahms-private .so libraries. Also add
+ SYSTEMML_INSTALL_PATH to brahms invocation script.
+Author: Seb James <seb.james@sheffield.ac.uk>
+Forwarded: No need to forward.
+Last-Update: 2014-02-22
+
+--- a/framework/public/brahms
++++ b/framework/public/brahms
+@@ -65,7 +65,12 @@
+ # set path
+ BINPATH=`echo $0 | sed s/\\\\\(.*\\\\\)\\\/.*/\\\1/`
+ export PATH=$PATH:$BINPATH
+-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BINPATH
++LIBPATH=/usr/lib/brahms
++export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBPATH
++
++# Set the SYSTEMML_INSTALL_PATH for this Debian installation of Brahms
++# (This is added as part of the Debian packaging process)
++export SYSTEMML_INSTALL_PATH=''
+ 
+ # call BRAHMS executable
+ brahms-execute "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8"
