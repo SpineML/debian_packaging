@@ -172,7 +172,7 @@ Homepage: http://bimpa.group.shef.ac.uk/SpineML/index.php/Brahms
 
 Package: $PROGRAM_NAME
 Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}, brahms (= 0.7.3-1), xsltproc
+Depends: \${shlibs:Depends}, \${misc:Depends}, brahms (= 0.7.3-1), xsltproc, build-essential
 Description:  Scripts and a Brahms component Namespace for SpineML-described models.
  These scripts take SpineML input and generate a Brahms namespace of components
  which can be used to execute the model.
