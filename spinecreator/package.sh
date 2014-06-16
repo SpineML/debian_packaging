@@ -169,11 +169,11 @@ copyin()
         exit
     fi
     THEFILE="$1"
-    if [ ! -f ~/greenbrain/SpineCreator/package/debian/$THEFILE ]; then
-        echo "You need to create/update the $THEFILE file (in the SpineCreator source)"
+    if [ ! -f ~/greenbrain/debian_packaging/spinecreator/$THEFILE ]; then
+        echo "You need to create/update the $THEFILE file (in the debian_packaging repo)"
         exit
     fi
-    cat ~/greenbrain/SpineCreator/package/debian/$THEFILE > debian/$THEFILE
+    cat ~/greenbrain/debian_packaging/spinecreator/$THEFILE > debian/$THEFILE
 }
 
 # Copy in the changelog
@@ -312,7 +312,7 @@ export CXXFLAGS=`dpkg-buildflags --get CXXFLAGS`
 export LDFLAGS=`dpkg-buildflags --get LDFLAGS`
 export DEB_BUILD_HARDENING=1
 
-echo "Ready to build..."
+echo "Ready to build. Pushing into $DEBNAME"
 pushd $DEBNAME
 
 # You can do a simple build for the current platform like this:
