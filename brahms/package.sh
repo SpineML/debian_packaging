@@ -284,10 +284,13 @@ pushd $DEBNAME
 #DEB_HOST_ARCH=amd64 DIST=wheezy ARCH=amd64 pdebuild
 #DEB_HOST_ARCH=i386 DIST=wheezy ARCH=i386 pdebuild
 
-#DEB_HOST_ARCH=amd64 DIST=jessie ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
+DEB_HOST_ARCH=amd64 DIST=jessie ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
 
-DEB_HOST_ARCH=i386 DIST=jessie ARCH=i386 pdebuild -- --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
+# i386 not working yet (due to code error in BRAHMS which triggers warning/error here)
+#DEB_HOST_ARCH=i386 DIST=jessie ARCH=i386 pdebuild -- --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
 
+# wheezy doesn't work either
+#DEB_HOST_ARCH=amd64 DIST=wheezy ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/wheezy-amd64-base.tgz
 
 echo "Done. Look in /var/cache/pbuilder/<release>-<arch>/result/ for the debs"
 

@@ -26,13 +26,14 @@ of at the moment.
 
 The scripts are intended to run from:
 
-~/greenbrain/debian_packaging
+~/src/debian_packaging
 
-with the SpineCreator and SpineML_2_BRAHMS git repos checked out in:
+with the SpineCreator, brahms, SpineML_PreFlight and SpineML_2_BRAHMS
+git repos checked out in:
 
-~/greenbrain/
+~/src/
 
-That is - checkout everything in ~/greenbrain.
+That is - checkout everything in ~/src.
 
 Now cd into ~/greenbrain/debian_packaging/brahms and run the package.sh script.
 You'll have to install a number of Debian developer packages, including pbuilder.
