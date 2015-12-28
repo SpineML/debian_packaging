@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Supercedes brahms_package.sh. Packages the git-revision-controlled
-# version of brahms, which has a cmake build process. Consequently,
-# this should be a lot simpler.
-
 ################################################################################
 #
 # Making a debian package of BRAHMS
@@ -76,17 +72,17 @@ if [ "x$1" = "xclean" ]; then
     exit 0
 fi
 
-# Our "upsream" tarball will be checked out in ./src
+# Our "upstream" tarball will be checked out in ./src
 mkdir -p src
 pushd src
-if [ ! -d $DEBNAME ]; then
+#if [ ! -d $DEBNAME ]; then
     if [ -d ./brahms ]; then
         # Remove and then re-clone
         rm -rf brahms $DEBNAME
     fi
     git clone https://github.com/sebjameswml/brahms
     mv brahms $DEBNAME
-fi # else do nothing for now
+#fi # else do nothing for now
 popd
 
 # Now create $DEBNAME.tar.gz
@@ -132,12 +128,14 @@ rm -f debian/README.Debian
 # And for each line dpkg -S library.so.X
 #
 # Poss. additional Depends: libxt6, libxaw7
+# Note about debhelper: The debhelper level needs also to be set into debian/compat.
+DEBHELPER_COMPAT_LEVEL=9
 cat > debian/control <<EOF
 Source: $PROGRAM_NAME
 Section: science
 Priority: optional
 Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
-Build-Depends: debhelper (>= 8.0.0), python-minimal, python-numpy, subversion, libmpich2-dev, python-dev, libxt-dev, libxaw7-dev, cmake, cdbs, libz-dev, pkg-config
+Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), python-minimal, python-numpy, python-dev, libxt-dev, libxaw7-dev, cmake, cdbs, libz-dev, pkg-config
 Standards-Version: 3.9.3
 Homepage: https://github.com/sebjameswml/brahms
 
@@ -148,6 +146,8 @@ Recommends: mpich2, python
 Description:  Middleware for integrated systems computation
  Execute models described by SystemML
 EOF
+
+echo $DEBHELPER_COMPAT_LEVEL > debian/compat
 
 # Copy in the changelog
 if [ ! -f ../brahms_changelog ]; then
@@ -241,12 +241,12 @@ repository at https://github.com/sebjameswml/brahms
 EOF
 
 
-# The rules for building. Note - custom file here. Created with help from
-# https://wiki.debian.org/Courses2005/BuildingWithoutHelper
+# The rules for building.
 echo "Doing debian/rules..."
 cat > debian/rules <<EOF
 #!/usr/bin/make -f
 # -*- makefile -*-
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
 DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr -DSTANDALONE_INSTALL=OFF
@@ -262,36 +262,30 @@ popd
 echo "unpacking $DEBORIG.tar.gz:"
 tar xvf $DEBORIG.tar.gz
 
-# Set up compiler dpkg-buildflags
-export CPPFLAGS=`dpkg-buildflags --get CPPFLAGS`
-export CFLAGS=`dpkg-buildflags --get CFLAGS`
-export CXXFLAGS=`dpkg-buildflags --get CXXFLAGS`
-export LDFLAGS=`dpkg-buildflags --get LDFLAGS`
-export DEB_BUILD_HARDENING=1
-
 echo "Ready to build..."
 pushd $DEBNAME
-#echo " dpkg-buildpackage -j$CORES -rfakeroot"
-#dpkg-buildpackage -j -rfakeroot
 
-# pbuilder method for building. If you change the DIST, then before
-# doing this, you have to call
+# I'm using the pbuilder method for building, which is called by the
+# pdebuild script. If you change the distribution, then before doing
+# this, you have to call the following to create a new distribution
+# base tgz:
 #
 # sudo pbuilder --create --architecture i386 --distribution jessie --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
 # sudo pbuilder --create --architecture amd64 --distribution jessie --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
-# (jessie used as the example here).
+# (jessie is used as the example here).
 
-#DEB_HOST_ARCH=amd64 DIST=wheezy ARCH=amd64 pdebuild
-#DEB_HOST_ARCH=i386 DIST=wheezy ARCH=i386 pdebuild
+#
+# Finally, actually call pdebuild:
+#
 
-DEB_HOST_ARCH=amd64 DIST=jessie ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
-
-# i386 not working yet (due to code error in BRAHMS which triggers warning/error here)
+# These jessie builds work:
+#DEB_HOST_ARCH=amd64 DIST=jessie ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
 #DEB_HOST_ARCH=i386 DIST=jessie ARCH=i386 pdebuild -- --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
 
-# wheezy doesn't work either
-#DEB_HOST_ARCH=amd64 DIST=wheezy ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/wheezy-amd64-base.tgz
+# I'm currently trying to ensure that a wheezy build is possible
+#pdebuild -- --basetgz /var/cache/pbuilder/wheezy-amd64-base.tgz
+pdebuild -- --basetgz /var/cache/pbuilder/wheezy-i386-base.tgz
 
-echo "Done. Look in /var/cache/pbuilder/<release>-<arch>/result/ for the debs"
+echo "Done. Look in /var/cache/pbuilder/result/ for the debs"
 
 popd
