@@ -75,14 +75,17 @@ fi
 # Our "upstream" tarball will be checked out in ./src
 mkdir -p src
 pushd src
-#if [ ! -d $DEBNAME ]; then
+if [ ! -d $DEBNAME ]; then
     if [ -d ./brahms ]; then
         # Remove and then re-clone
         rm -rf brahms $DEBNAME
     fi
     git clone https://github.com/sebjameswml/brahms
     mv brahms $DEBNAME
-#fi # else do nothing for now
+else
+    cd $DEBNAME
+    git pull
+fi
 popd
 
 # Now create $DEBNAME.tar.gz
@@ -141,7 +144,7 @@ Homepage: https://github.com/sebjameswml/brahms
 
 Package: $PROGRAM_NAME
 Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}, libz1, libxt6, libxext6, libxaw7, libx11-6, libxpm4, libxau6, libxcb1, libice6
+Depends: \${shlibs:Depends}, \${misc:Depends}
 Recommends: mpich2, python
 Description:  Middleware for integrated systems computation
  Execute models described by SystemML
@@ -155,33 +158,16 @@ if [ ! -f ../brahms_changelog ]; then
     exit
 fi
 cp ../brahms_changelog debian/changelog
- 
-# and the manpages
-if [ ! -f ../brahms.1 ]; then
-    echo "You need to create/update the brahms manpage"
-    exit
-fi
-cp ../brahms.1 debian/brahms.1
 
-if [ ! -f ../brahms-execute.1 ]; then
-    echo "You need to create/update the brahms-execute manpage"
-    exit
-fi
-cp ../brahms-execute.1 debian/brahms-execute.1
-
-if [ ! -f ../elements_monolithic.1 ]; then
-    echo "You need to create/update the elements_monolithic manpage"
-    exit
-fi
-cp ../elements_monolithic.1 debian/elements_monolithic.1
-
-
-# menu (can be left out - this is legacy (?)
-#cat > debian/menu <<EOF
-#?package($PROGRAM_NAME):needs="Terminal" section="Applications/Science/Biology"\
-#  title="$PROGRAM_NAME" command="/opt/brahms/BRAHMS/bin/$PROGRAM_NAME"
-#
-#EOF
+# Two lintian overrides required as brahms installs
+# libbrahms-compress.so and libbrahms-channel-sockets.so which are
+# dynamically linked and hence fox lintian.
+mkdir -p debian/source
+cat > debian/source/lintian-overrides <<EOF
+# brahms installs a couple of dynamically linked shared object libs
+brahms source: postinst-has-useless-call-to-ldconfig exact match
+brahms source: postrm-has-useless-call-to-ldconfig exact match
+EOF
 
 # The copyright notice
 cat > debian/copyright <<EOF
@@ -249,7 +235,7 @@ cat > debian/rules <<EOF
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk
-DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr -DSTANDALONE_INSTALL=OFF
+DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr -DSTANDALONE_INSTALL=OFF -DLICENSE_INSTALL=OFF
 EOF
 popd
 
@@ -265,6 +251,12 @@ tar xvf $DEBORIG.tar.gz
 echo "Ready to build..."
 pushd $DEBNAME
 
+echo "Clear CFLAGS etc, so that debian rules will set them up"
+unset CPPFLAGS
+unset CFLAGS
+unset CXXFLAGS
+unset LDFLAGS
+
 # I'm using the pbuilder method for building, which is called by the
 # pdebuild script. If you change the distribution, then before doing
 # this, you have to call the following to create a new distribution
@@ -275,17 +267,14 @@ pushd $DEBNAME
 # (jessie is used as the example here).
 
 #
-# Finally, actually call pdebuild:
+# Finally, actually call pdebuild for your distro:
 #
 
-# These jessie builds work:
-#DEB_HOST_ARCH=amd64 DIST=jessie ARCH=amd64 pdebuild -- --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
-#DEB_HOST_ARCH=i386 DIST=jessie ARCH=i386 pdebuild -- --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
+DISTRO=trusty
 
-# I'm currently trying to ensure that a wheezy build is possible
-#pdebuild -- --basetgz /var/cache/pbuilder/wheezy-amd64-base.tgz
-pdebuild -- --basetgz /var/cache/pbuilder/wheezy-i386-base.tgz
+pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
+#pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
 
-echo "Done. Look in /var/cache/pbuilder/result/ for the debs"
+echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 
 popd
