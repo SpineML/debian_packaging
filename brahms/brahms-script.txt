@@ -1,7 +1,0 @@
-Description: Add Debian-specific changes to brahms script
- Adds /usr/lib/brahms to the wrapper script so that brahms-execute
- will be able to link to the brahms-private .so libraries. Also add
- SYSTEMML_INSTALL_PATH to brahms invocation script.
-Author: Seb James <seb.james@sheffield.ac.uk>
-Forwarded: No need to forward.
-Last-Update: 2014-02-22
