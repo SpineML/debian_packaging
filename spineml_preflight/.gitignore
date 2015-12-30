@@ -1,0 +1,7 @@
+spineml-preflight_*_*.build
+spineml-preflight_*.debian.tar.gz
+spineml-preflight_*.dsc
+spineml-preflight_*_source.changes
+spineml-preflight_*.orig.tar.gz
+spineml-preflight-*.tar.gz
+spineml-preflight-[0-9].[0-9].[0-9]

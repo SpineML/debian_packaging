@@ -1,0 +1,7 @@
+brahms_*_*.build
+brahms_*.debian.tar.gz
+brahms_*.dsc
+brahms_*_source.changes
+brahms_*.orig.tar.gz
+brahms-*.tar.gz
+brahms-[0-9].[0-9].[0-9]
