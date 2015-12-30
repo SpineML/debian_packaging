@@ -162,11 +162,16 @@ cp ../brahms_changelog debian/changelog
 # Two lintian overrides required as brahms installs
 # libbrahms-compress.so and libbrahms-channel-sockets.so which are
 # dynamically linked and hence fox lintian.
-mkdir -p debian/source
-cat > debian/source/lintian-overrides <<EOF
-# brahms installs a couple of dynamically linked shared object libs
-brahms source: postinst-has-useless-call-to-ldconfig exact match
-brahms source: postrm-has-useless-call-to-ldconfig exact match
+cat > debian/brahms.lintian-overrides <<EOF
+# brahms installs a couple of shared object libraries which are linked
+# dynamically by the executable at runtime when it requires them. There
+# are no other libraries which are linked to the executable and so the
+# call to ldconfig is ineffective and causes
+# postinst-has-useless-call-to-ldconfig and
+# postrm-has-useless-call-to-ldconfig. This is debhelper bug
+# https://bugs.debian.org/204975
+brahms binary: postinst-has-useless-call-to-ldconfig
+brahms binary: postrm-has-useless-call-to-ldconfig
 EOF
 
 # The copyright notice
