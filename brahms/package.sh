@@ -178,7 +178,7 @@ EOF
 cat > debian/copyright <<EOF
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: $PROGRAM_NAME
-Source: https://http://brahms.sourceforge.net/
+Source: https://github.com/sebjameswml/brahms
 
 # Upstream copyright:
 Files: *
