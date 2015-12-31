@@ -4,16 +4,6 @@
 #
 # Making a debian package of spinecreator
 #
-#
-
-# Before you start, here are the dependencies:
-# sudo apt-get install build-essential autoconf automake autotools-dev
-#                      dh-make debhelper devscripts fakeroot xutils
-#                      lintian pbuilder cdbs
-#
-# You also need to modify changelog.spinecreator, to say why the code
-# is being packaged again.
-#
 
 function usage () {
    cat <<EOF
@@ -21,7 +11,7 @@ function usage () {
 usage: $0 <version>
 or     $0 <version> clean
 
-Create Debian package of SpineML_2_BRAHMS with given version.
+Create Debian package of SpineCreator with given version.
 
 Provide clean as the second argument to clean up all generated files for the
 given version.
@@ -49,24 +39,21 @@ if [ "x$1" = "xclean" ]; then
 fi
 
 VERSION="$1"
+ITPBUG=9999
 
-# Get git revision information
-pushd ~/greenbrain/SpineCreator
-GIT_BRANCH=`git branch| grep \*| awk -F' ' '{ print $2; }'`
-GIT_LAST_COMMIT_SHA=`git log -1 --oneline | awk -F' ' '{print $1;}'`
-GIT_LAST_COMMIT_DATE=`git log -1 | grep Date | awk -F 'Date:' '{print $2;}'| sed 's/^[ \t]*//'`
-popd
+dt=`date` # Fri, 16 May 2014 15:57:55 +0000
+cat > changelog <<EOF
+spinecreator ($VERSION-1) UNRELEASED unstable; urgency=low
+
+  * Initial release (Closes: #$ITPBUG)
+
+ -- $DEBFULLNAME <$DEBEMAIL>  Thu, 31 Dec 2015 15:57:55 +0000
+EOF
 
 # How many processors do we have?
 PROCESSORS=`grep "^physical id" /proc/cpuinfo | sort -u | wc -l`
 CORES_PER_PROC=`grep "^core id" /proc/cpuinfo | sort -u | wc -l`
 CORES=$((PROCESSORS * CORES_PER_PROC))
-
-# Ensure spec file exists
-pushd ~/greenbrain/SpineCreator
-qmake-qt4 neuralNetworks.pro -r -spec linux-g++
-make clean
-popd
 
 ################################################################################
 #
@@ -74,6 +61,8 @@ popd
 #
 #
 PROGRAM_NAME=spinecreator
+GIT_REPO_DIR=SpineCreator
+
 # The deb source directory will be created with this directory name
 DEBNAME=$PROGRAM_NAME-$VERSION
 
@@ -103,9 +92,47 @@ if [ "x$2" = "xclean" ]; then
     exit 0
 fi
 
-# Create our "upstream" tarball from the git repo
-cp -Ra ~/greenbrain/SpineCreator /tmp/$DEBNAME # Note: SpineCreator tarball has to be spinecreator-0.9.3
-tar czf $DEBNAME.tar.gz --exclude-vcs -C/tmp $DEBNAME
+# Our "upstream" tarball will be checked out in ./src
+mkdir -p src
+pushd src
+
+if [ ! -d $DEBNAME ]; then
+    if [ -d ./$GIT_REPO_DIR ]; then
+        # Remove and then re-clone
+        rm -rf $GIT_REPO_DIR $DEBNAME
+    fi
+    git clone https://github.com/SpineML/$GIT_REPO_DIR
+    mv $GIT_REPO_DIR $DEBNAME
+    pushd $DEBNAME
+    #git co -b rel-$VERSION
+    popd
+else
+    pushd $DEBNAME
+    git pull
+    popd
+fi
+
+pushd $DEBNAME
+# Get git revision information
+GIT_BRANCH=`git branch| grep \*| awk -F' ' '{ print $2; }'`
+GIT_LAST_COMMIT_SHA=`git log -1 --oneline | awk -F' ' '{print $1;}'`
+GIT_LAST_COMMIT_DATE=`git log -1 | grep Date | awk -F 'Date:' '{print $2;}'| sed 's/^[ \t]*//'`
+# Ensure spec file exists
+qmake neuralNetworks.pro -r -spec linux-g++
+make clean
+popd
+
+popd # from src/
+
+## Create our "upstream" tarball from the git repo
+#cp -Ra ~/greenbrain/SpineCreator /tmp/$DEBNAME # Note: SpineCreator tarball has to be spinecreator-0.9.3
+
+# Now create $DEBNAME.tar.gz
+if [ -f $DEBNAME.tar.gz ]; then
+    rm -f $DEBNAME.tar.gz
+fi
+
+tar czf $DEBNAME.tar.gz --exclude-vcs -C./src $DEBNAME
 
 # Clean up our source directory and then create it and pushd into it
 mkdir -p $DEBNAME
@@ -120,7 +147,7 @@ dh_make -s -f ../$DEBNAME.tar.gz
 #
 #
 
-# NB: We should have no upstream bugs to fix, as we ARE the upstream maintainers.
+# We should have no upstream bugs to fix, as we ARE the upstream maintainers.
 
 ################################################################################
 #
@@ -141,21 +168,30 @@ rm -f debian/README.Debian
 # objdump -p /path/to/spinecreator | grep NEEDED
 # And for each line dpkg -S library.so.X
 #
-# NB: I'll add Brahms to the Recommends line, when I've created a debian package for it.
+# NB: I'll add Brahms to the Recommends line, when I've created a
+# debian package for it. Or perhaps these would be best in Depends?
+#
+# extra libs? libgvc6 perhaps. Not perfectly sure of graphviz-dev
+# version that we have to be greater than. approx 2.32.
+#
+# Dependencies will be some of:
+# qtdeclarative5-dev, qtdeclarative5-dev-tools, libqt5declarative5,
+# qtquick1-5-dev, qtscript5-dev, libqt5svg5-dev, qttools5-dev-tools,
+# qttools5-dev, libqt5opengl5-dev, qtquick1-qml-plugins
 #
 cat > debian/control <<EOF
 Source: spinecreator
 Section: x11
 Priority: optional
 Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
-Build-Depends: debhelper (>= 8.0.0), qt4-qmake, libc6-dev, libstdc++-dev, libglu1-mesa-dev, libqt4-dev, libqt4-opengl-dev, libgvc5, libgraph4, python2.7-dev, cdbs, graphviz-dev (>= 2.26.3)
+Build-Depends: debhelper (>= 8.0.0), libc6-dev, libstdc++-dev, libglu1-mesa-dev, python2.7-dev, cdbs, graphviz-dev (>= 2.32.0), qt5-qmake, qttools5-dev, qttools5-dev-tools, libqt5opengl5-dev, libqt5svg5-dev, qt5-default
 Standards-Version: 3.9.3
 Homepage: http://bimpa.group.shef.ac.uk/SpineML/index.php/SpineCreator_-_A_Graphical_Tool
 
 Package: spinecreator
 Architecture: any
 Depends: \${shlibs:Depends}, \${misc:Depends}
-Recommends: xsltproc, gcc
+Recommends: xsltproc, gcc, spineml-preflight, spineml-2-brahms, brahms
 Description:  GUI for SpineML.
  Create, visualise and simulate networks of point spiking neural models.
  For use with the SpineML XML format and compatible simulators.
@@ -305,22 +341,34 @@ popd
 echo "unpacking $DEBORIG.tar.gz:"
 tar xvf $DEBORIG.tar.gz
 
-# Set up compiler dpkg-buildflags
-export CPPFLAGS=`dpkg-buildflags --get CPPFLAGS`
-export CFLAGS=`dpkg-buildflags --get CFLAGS`
-export CXXFLAGS=`dpkg-buildflags --get CXXFLAGS`
-export LDFLAGS=`dpkg-buildflags --get LDFLAGS`
-export DEB_BUILD_HARDENING=1
-
-echo "Ready to build. Pushing into $DEBNAME"
+echo "Ready to build..."
 pushd $DEBNAME
 
-# You can do a simple build for the current platform like this:
-# dpkg-buildpackage -j$CORES -rfakeroot
+echo "Clear CFLAGS etc, so that debian rules will set them up"
+unset CPPFLAGS
+unset CFLAGS
+unset CXXFLAGS
+unset LDFLAGS
 
-DEB_HOST_ARCH=amd64 DIST=wheezy ARCH=amd64 pdebuild
-DEB_HOST_ARCH=i386 DIST=wheezy ARCH=i386 pdebuild
+# I'm using the pbuilder method for building, which is called by the
+# pdebuild script. If you change the distribution, then before doing
+# this, you have to call the following to create a new distribution
+# base tgz:
+#
+# sudo pbuilder --create --architecture i386 --distribution jessie --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
+# sudo pbuilder --create --architecture amd64 --distribution jessie --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
+# sudo pbuilder --create --architecture amd64 --distribution trusty --basetgz /var/cache/pbuilder/trusty-amd64-base.tgz
+# (jessie is used as the example here).
 
-echo "Done. Look in /var/cache/pbuilder/<release>-<arch>/result/ for the debs"
+#
+# Finally, actually call pdebuild for your distro:
+#
+
+DISTRO=trusty
+
+pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
+#pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
+
+echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 
 popd

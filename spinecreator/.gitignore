@@ -1,0 +1,8 @@
+src
+spinecreator_*_*.build
+spinecreator_*.debian.tar.gz
+spinecreator_*.dsc
+spinecreator_*_source.changes
+spinecreator_*.orig.tar.gz
+spinecreator-*.tar.gz
+spinecreator-[0-9].[0-9].[0-9]
