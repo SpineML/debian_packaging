@@ -29,8 +29,20 @@ PROCESSORS=`grep "^physical id" /proc/cpuinfo | sort -u | wc -l`
 CORES_PER_PROC=`grep "^core id" /proc/cpuinfo | sort -u | wc -l`
 CORES=$((PROCESSORS * CORES_PER_PROC))
 
+# Get version, distro, git branch from the command line
+if [ -z $2 ]; then
+    echo "usage: package.sh version distro <branch>"
+    echo "(branch defaults to 'master' if omitted)"
+    exit
+fi
+GIT_BRANCH_REQUEST="master"
+if [ ! -z $3 ]; then
+    GIT_BRANCH_REQUEST="$3"
+fi
+
 PROGRAM_NAME=brahms
-VERSION=0.8.0
+VERSION="$1"
+DISTRO="$2"
 
 ################################################################################
 #
@@ -82,11 +94,24 @@ if [ ! -d $DEBNAME ]; then
     fi
     git clone https://github.com/sebjameswml/brahms
     mv brahms $DEBNAME
+    pushd $DEB
+    git checkout -b "$GIT_BRANCH_REQUEST"
+    popd
 else
-    cd $DEBNAME
+    pushd $DEBNAME
+    git checkout "$GIT_BRANCH_REQUEST"
     git pull
+    popd
 fi
+
+pushd $DEBNAME
+# Get git revision information
+GIT_BRANCH=`git branch| grep \*| awk -F' ' '{ print $2; }'`
+GIT_LAST_COMMIT_SHA=`git log -1 --oneline | awk -F' ' '{print $1;}'`
+GIT_LAST_COMMIT_DATE=`git log -1 | grep Date | awk -F 'Date:' '{print $2;}'| sed 's/^[ \t]*//'`
 popd
+
+popd # src/
 
 # Now create $DEBNAME.tar.gz
 if [ -f $DEBNAME.tar.gz ]; then
@@ -229,6 +254,8 @@ $PROGRAM_NAME for Debian
 This package was produced from a source tarball automatically built from the git
 repository at https://github.com/sebjameswml/brahms
 
+The git commit revision is: $GIT_LAST_COMMIT_SHA of $GIT_LAST_COMMIT_DATE on
+the $GIT_BRANCH branch.
 EOF
 
 
@@ -267,18 +294,23 @@ unset LDFLAGS
 # this, you have to call the following to create a new distribution
 # base tgz:
 #
-# sudo pbuilder --create --architecture i386 --distribution jessie --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
-# sudo pbuilder --create --architecture amd64 --distribution jessie --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
-# (jessie is used as the example here).
+# if no basetgz, then create it.
+if [ ! -f /var/cache/pbuilder/$DISTRO-i386-base.tgz ]; then
+    echo "Create i386 pbuilder base.tgz"
+    sudo pbuilder --create --architecture i386 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
+fi
+
+if [ ! -f /var/cache/pbuilder/$DISTRO-amd64-base.tgz ]; then
+    echo "Create amd64 pbuilder base.tgz"
+    sudo pbuilder --create --architecture amd64 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz
+fi
 
 #
 # Finally, actually call pdebuild for your distro:
 #
 
-DISTRO=trusty
-
 pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
-#pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
+pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
 
 echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 

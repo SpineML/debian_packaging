@@ -30,15 +30,19 @@ export DEBFULLNAME="Sebastian Scott James"
 PACKAGE_MAINTAINER_GPG_IDENTITY="DEBFULLNAME <$DEBEMAIL>"
 CURRENT_YEAR=`date +%Y`
 
-# Check we're being called the right way.
-if [ -z "$1" ]; then
-    usage
+# Get version, distro, git branch from the command line
+if [ -z $2 ]; then
+    echo "usage: package.sh version distro <branch>"
+    echo "(branch defaults to 'master' if omitted)"
+    exit
 fi
-if [ "x$1" = "xclean" ]; then
-    usage
+GIT_BRANCH_REQUEST="master"
+if [ ! -z $3 ]; then
+    GIT_BRANCH_REQUEST="$3"
 fi
 
 VERSION="$1"
+DISTRO="$2"
 ITPBUG=9999
 
 dt=`date` # Fri, 16 May 2014 15:57:55 +0000
@@ -86,12 +90,6 @@ rm -f $PROGRAM_NAME"_$VERSION-1_source.changes"
 # Remove temporary "upstream tarball" created from the git repo
 rm -rf /tmp/$DEBNAME
 
-# If we're only to clean up, then stop here.
-if [ "x$2" = "xclean" ]; then
-    echo "Cleaned up; exiting."
-    exit 0
-fi
-
 # Our "upstream" tarball will be checked out in ./src
 mkdir -p src
 pushd src
@@ -104,10 +102,11 @@ if [ ! -d $DEBNAME ]; then
     git clone https://github.com/SpineML/$GIT_REPO_DIR
     mv $GIT_REPO_DIR $DEBNAME
     pushd $DEBNAME
-    #git co -b rel-$VERSION
+    git checkout -b $GIT_BRANCH_REQUEST
     popd
 else
     pushd $DEBNAME
+    git checkout $GIT_BRANCH_REQUEST
     git pull
     popd
 fi
@@ -123,9 +122,6 @@ make clean
 popd
 
 popd # from src/
-
-## Create our "upstream" tarball from the git repo
-#cp -Ra ~/greenbrain/SpineCreator /tmp/$DEBNAME # Note: SpineCreator tarball has to be spinecreator-0.9.3
 
 # Now create $DEBNAME.tar.gz
 if [ -f $DEBNAME.tar.gz ]; then
@@ -190,8 +186,8 @@ Homepage: http://bimpa.group.shef.ac.uk/SpineML/index.php/SpineCreator_-_A_Graph
 
 Package: spinecreator
 Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}
-Recommends: xsltproc, gcc, spineml-preflight, spineml-2-brahms, brahms
+Depends: \${shlibs:Depends}, \${misc:Depends}, spineml-preflight
+Recommends: xsltproc, gcc, spineml-2-brahms
 Description:  GUI for SpineML.
  Create, visualise and simulate networks of point spiking neural models.
  For use with the SpineML XML format and compatible simulators.
@@ -354,20 +350,22 @@ unset LDFLAGS
 # pdebuild script. If you change the distribution, then before doing
 # this, you have to call the following to create a new distribution
 # base tgz:
-#
-# sudo pbuilder --create --architecture i386 --distribution jessie --basetgz /var/cache/pbuilder/jessie-i386-base.tgz
-# sudo pbuilder --create --architecture amd64 --distribution jessie --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz
-# sudo pbuilder --create --architecture amd64 --distribution trusty --basetgz /var/cache/pbuilder/trusty-amd64-base.tgz
-# (jessie is used as the example here).
+if [ ! -f /var/cache/pbuilder/$DISTRO-i386-base.tgz ]; then
+    echo "Create i386 pbuilder base.tgz"
+    sudo pbuilder --create --architecture i386 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
+fi
+
+if [ ! -f /var/cache/pbuilder/$DISTRO-amd64-base.tgz ]; then
+    echo "Create amd64 pbuilder base.tgz"
+    sudo pbuilder --create --architecture amd64 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz
+fi
 
 #
 # Finally, actually call pdebuild for your distro:
 #
 
-DISTRO=trusty
-
 pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
-#pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
+pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
 
 echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 
