@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Builds all 4 packages for Trusty Tahir (Ubuntu 2014.4)
+# Builds all 4 packages for Wily (Ubuntu 2015.10)
 
 # To run this, you need to have set up local package dependencies, with this
 # in /etc/pbuilderrc:
@@ -29,7 +29,7 @@
 # pbuilder/$DISTRO-amd64/i386-results directories
 
 # What versions/branches?
-DISTRO=trusty
+DISTRO=wily
 
 BRAHMS_VER=0.8.0
 BRAHMS_BR=master

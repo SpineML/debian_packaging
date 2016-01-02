@@ -44,3 +44,19 @@ system. I believe debhelper only needs to be installed within the
 chroot in which pbuilder compiles the code.
 
 Review the script first as it isn't going to work first time!
+
+Packaging Debian on an Ubuntu system:
+
+Creating the base.tgz is the trick. First, add the Debian keyring:
+
+sudo apt-get install debian-archive-keyring
+
+Then, be sure to add this to the pbuilder create call:
+
+--debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
+
+So it might be:
+
+sudo pbuilder --create --architecture amd64 --distribution jessie \
+ --basetgz /var/cache/pbuilder/jessie-amd64-base.tgz \
+ --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
