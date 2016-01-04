@@ -8,13 +8,11 @@
 function usage () {
    cat <<EOF
 
-usage: $0 <version>
-or     $0 <version> clean
+usage: $0 version distro <branch>
+
+Branch defaults to 'master' if omitted.
 
 Create Debian package of SpineCreator with given version.
-
-Provide clean as the second argument to clean up all generated files for the
-given version.
 
 EOF
    exit 0
@@ -32,8 +30,7 @@ CURRENT_YEAR=`date +%Y`
 
 # Get version, distro, git branch from the command line
 if [ -z $2 ]; then
-    echo "usage: package.sh version distro <branch>"
-    echo "(branch defaults to 'master' if omitted)"
+    usage
     exit
 fi
 GIT_BRANCH_REQUEST="master"
