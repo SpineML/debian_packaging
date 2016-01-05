@@ -22,6 +22,7 @@ umask 0022
 export DEBEMAIL="seb.james@sheffield.ac.uk"
 export DEBFULLNAME="Sebastian Scott James"
 PACKAGE_MAINTAINER_GPG_IDENTITY="$DEBFULLNAME <$DEBEMAIL>"
+PACKAGE_MAINTAINER_GPG_KEYID="E9C8DA2C"
 CURRENT_YEAR=`date +%Y`
 
 # How many processors do we have?
@@ -44,12 +45,22 @@ PROGRAM_NAME=brahms
 VERSION="$1"
 DISTRO="$2"
 
+ITPBUG=742518
+
+dt=`date` # Fri, 16 May 2014 15:57:55 +0000
+cat > changelog <<EOF
+$PROGRAM_NAME ($VERSION-1) $DISTRO unstable; urgency=low
+
+  * Initial release (Closes: #$ITPBUG)
+
+ -- $DEBFULLNAME <$DEBEMAIL>  Thu, 31 Dec 2015 15:57:55 +0000
+EOF
+
 ################################################################################
 #
 # Setting up the package. See http://www.debian.org/doc/manuals/maint-guide/first.en.html
 #
 #
-
 
 
 # The deb source directory will be created with this directory name
@@ -177,13 +188,6 @@ EOF
 
 echo $DEBHELPER_COMPAT_LEVEL > debian/compat
 
-# Copy in the changelog
-if [ ! -f ../brahms_changelog ]; then
-    echo "You need to create/update the changelog file"
-    exit
-fi
-cp ../brahms_changelog debian/changelog
-
 # Two lintian overrides required as brahms installs
 # libbrahms-compress.so and libbrahms-channel-sockets.so which are
 # dynamically linked and hence fox lintian.
@@ -309,9 +313,14 @@ fi
 # Finally, actually call pdebuild for your distro:
 #
 
+# pdebuild --debsign-k "$PACKAGE_MAINTAINER_GPG_KEYID" -- ...etc
 pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
 pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
 
 echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 
 popd
+
+# Now debsign the source:
+debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${VERSION}-1_source.changes
+
