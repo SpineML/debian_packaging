@@ -17,16 +17,8 @@
 # Make sure we're using the right umask:
 umask 0022
 
-# Some parameters.
-export DEBEMAIL="seb.james@sheffield.ac.uk"
-export DEBFULLNAME="Sebastian Scott James"
-PACKAGE_MAINTAINER_GPG_IDENTITY="$DEBFULLNAME <$DEBEMAIL>"
-CURRENT_YEAR=`date +%Y`
-
-# How many processors do we have?
-PROCESSORS=`grep "^physical id" /proc/cpuinfo | sort -u | wc -l`
-CORES_PER_PROC=`grep "^core id" /proc/cpuinfo | sort -u | wc -l`
-CORES=$((PROCESSORS * CORES_PER_PROC))
+# The package maintainer parameters.
+. ../package_maintainer.sh
 
 # Get version, distro, git branch from the command line
 if [ -z $2 ]; then

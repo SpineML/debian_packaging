@@ -22,11 +22,8 @@ umask 0022
 # Avoid gcc-4.8 from /usr/local/bin (this is for circle):
 export PATH=/usr/bin:/bin
 
-# Some parameters.
-export DEBEMAIL="seb.james@sheffield.ac.uk"
-export DEBFULLNAME="Sebastian Scott James"
-PACKAGE_MAINTAINER_GPG_IDENTITY="DEBFULLNAME <$DEBEMAIL>"
-CURRENT_YEAR=`date +%Y`
+# The package maintainer parameters.
+. ../package_maintainer.sh
 
 # Get version, distro, git branch from the command line
 if [ -z $2 ]; then
@@ -40,12 +37,7 @@ fi
 
 VERSION="$1"
 DISTRO="$2"
-ITPBUG=9999
-
-# How many processors do we have?
-PROCESSORS=`grep "^physical id" /proc/cpuinfo | sort -u | wc -l`
-CORES_PER_PROC=`grep "^core id" /proc/cpuinfo | sort -u | wc -l`
-CORES=$((PROCESSORS * CORES_PER_PROC))
+ITPBUG=810045
 
 ################################################################################
 #
