@@ -44,7 +44,7 @@ ITPBUG=9999
 
 dt=`date` # Fri, 16 May 2014 15:57:55 +0000
 cat > changelog <<EOF
-spinecreator ($VERSION-1) UNRELEASED unstable; urgency=low
+spinecreator ($VERSION-1) $DISTRO unstable; urgency=low
 
   * Initial release (Closes: #$ITPBUG)
 
