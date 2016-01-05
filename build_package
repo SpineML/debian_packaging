@@ -1,0 +1,28 @@
+################################################################################
+#
+# Common code to unpack and build the source debian
+#
+#
+
+echo "unpacking $DEBORIG.tar.gz:"
+tar xvf $DEBORIG.tar.gz
+
+echo "Ready to build..."
+pushd $DEBNAME
+
+echo "Clear CFLAGS etc, so that debian rules will set them up"
+unset CPPFLAGS
+unset CFLAGS
+unset CXXFLAGS
+unset LDFLAGS
+
+#
+# call pdebuild for your distro:
+#
+
+pdebuild --architecture amd64 --buildresult /var/cache/pbuilder/$DISTRO-amd64-result -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz 
+pdebuild --architecture i386 --buildresult /var/cache/pbuilder/$DISTRO-i386-result -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
+
+echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
+
+popd

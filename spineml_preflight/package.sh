@@ -39,6 +39,8 @@ GIT_REPO_DIR=SpineML_PreFlight
 VERSION="$1"
 DISTRO="$2"
 
+ITPBUG=9999
+
 # The deb source directory will be created with this directory name
 DEBNAME=$PROGRAM_NAME"-$VERSION"
 
@@ -125,6 +127,11 @@ rm -rf debian/*.EX
 # about running this software on Debian.
 rm -f debian/README.Debian
 
+# Create the fresh debian/changelog.
+rm -f debian/changelog
+debchange --create --package $PROGRAM_NAME --closes $ITPBUG \
+          --distribution $DISTRO --urgency low --newversion ${VERSION}-1
+
 # Create the correct control file
 # Figure out the dependencies using:
 # objdump -p /path/to/exe | grep NEEDED
@@ -151,13 +158,6 @@ Description: Simulator independent initial processing for SpineML models
 EOF
 
 echo $DEBHELPER_COMPAT_LEVEL > debian/compat
-
-# Copy in the changelog
-if [ ! -f ../${PROGRAM_NAME}_changelog ]; then
-    echo "Error: You need to create/update the changelog file"
-    exit
-fi
-cp ../${PROGRAM_NAME}_changelog debian/changelog
 
 # Two lintian overrides required as brahms installs
 # libbrahms-compress.so and libbrahms-channel-sockets.so which are
@@ -246,42 +246,7 @@ DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr
 EOF
 popd
 
-################################################################################
-#
-# Unpack debian orig source code files
-#
-#
+# Now debsign the source:
+debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${VERSION}-1_source.changes
 
-echo "unpacking $DEBORIG.tar.gz:"
-tar xvf $DEBORIG.tar.gz
-
-echo "Ready to build..."
-pushd $DEBNAME
-
-echo "Clear CFLAGS etc, so that debian rules will set them up"
-unset CPPFLAGS
-unset CFLAGS
-unset CXXFLAGS
-unset LDFLAGS
-
-# Create pbuilder base.tgz if necessary
-if [ ! -f /var/cache/pbuilder/$DISTRO-i386-base.tgz ]; then
-    echo "Create i386 pbuilder base.tgz"
-    sudo pbuilder --create --architecture i386 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
-fi
-
-if [ ! -f /var/cache/pbuilder/$DISTRO-amd64-base.tgz ]; then
-    echo "Create amd64 pbuilder base.tgz"
-    sudo pbuilder --create --architecture amd64 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz
-fi
-
-#
-# Finally, actually call pdebuild for your distro:
-#
-
-pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
-pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
-
-echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
-
-popd
+. ../build_package

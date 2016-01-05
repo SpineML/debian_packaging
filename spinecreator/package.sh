@@ -42,15 +42,6 @@ VERSION="$1"
 DISTRO="$2"
 ITPBUG=9999
 
-dt=`date` # Fri, 16 May 2014 15:57:55 +0000
-cat > changelog <<EOF
-spinecreator ($VERSION-1) $DISTRO unstable; urgency=low
-
-  * Initial release (Closes: #$ITPBUG)
-
- -- $DEBFULLNAME <$DEBEMAIL>  Thu, 31 Dec 2015 15:57:55 +0000
-EOF
-
 # How many processors do we have?
 PROCESSORS=`grep "^physical id" /proc/cpuinfo | sort -u | wc -l`
 CORES_PER_PROC=`grep "^core id" /proc/cpuinfo | sort -u | wc -l`
@@ -155,6 +146,11 @@ rm -rf debian/*.EX
 # We don't need a README.Debian file to describe special instructions
 # about running this softare on Debian.
 rm -f debian/README.Debian
+
+# Create the fresh debian/changelog.
+rm -f debian/changelog
+debchange --create --package $PROGRAM_NAME --closes $ITPBUG \
+    --distribution $DISTRO --urgency low --newversion ${VERSION}-1
 
 # Create the correct control file
 # Figure out the dependencies using:
@@ -324,46 +320,7 @@ EOF
 
 popd
 
+# Now debsign the source:
+debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${VERSION}-1_source.changes
 
-################################################################################
-#
-# Unpack debian orig source code files
-#
-#
-
-echo "unpacking $DEBORIG.tar.gz:"
-tar xvf $DEBORIG.tar.gz
-
-echo "Ready to build..."
-pushd $DEBNAME
-
-echo "Clear CFLAGS etc, so that debian rules will set them up"
-unset CPPFLAGS
-unset CFLAGS
-unset CXXFLAGS
-unset LDFLAGS
-
-# I'm using the pbuilder method for building, which is called by the
-# pdebuild script. If you change the distribution, then before doing
-# this, you have to call the following to create a new distribution
-# base tgz:
-if [ ! -f /var/cache/pbuilder/$DISTRO-i386-base.tgz ]; then
-    echo "Create i386 pbuilder base.tgz"
-    sudo pbuilder --create --architecture i386 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
-fi
-
-if [ ! -f /var/cache/pbuilder/$DISTRO-amd64-base.tgz ]; then
-    echo "Create amd64 pbuilder base.tgz"
-    sudo pbuilder --create --architecture amd64 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz
-fi
-
-#
-# Finally, actually call pdebuild for your distro:
-#
-
-pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
-pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
-
-echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
-
-popd
+. ../build_package

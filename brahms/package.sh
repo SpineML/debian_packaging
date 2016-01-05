@@ -152,17 +152,10 @@ rm -rf debian/*.EX
 # about running this software on Debian.
 rm -f debian/README.Debian
 
-# For Debian packaging $DISTRO may be replaced by UNRELEASED unstable in the
-# first line.
-# FIXME: Utilise debchange aka dch to manage the changelog.
-dt=`date` # Fri, 16 May 2014 15:57:55 +0000
-cat > debian/changelog <<EOF
-$PROGRAM_NAME ($VERSION-1) $DISTRO; urgency=low
-
-  * Initial release (Closes: #$ITPBUG)
-
- -- $DEBFULLNAME <$DEBEMAIL>  Thu, 31 Dec 2015 15:57:55 +0000
-EOF
+# Create the fresh debian/changelog.
+rm -f debian/changelog
+debchange --create --package $PROGRAM_NAME --closes $ITPBUG \
+          --distribution $DISTRO --urgency low --newversion ${VERSION}-1
 
 # Create the correct control file
 # Figure out the dependencies using:
@@ -278,52 +271,10 @@ DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr -DSTANDALONE_INSTALL=OFF -D
 EOF
 popd
 
-################################################################################
-#
-# Unpack debian orig source code files
-#
-#
-
-echo "unpacking $DEBORIG.tar.gz:"
-tar xvf $DEBORIG.tar.gz
-
-echo "Ready to build..."
-pushd $DEBNAME
-
-echo "Clear CFLAGS etc, so that debian rules will set them up"
-unset CPPFLAGS
-unset CFLAGS
-unset CXXFLAGS
-unset LDFLAGS
-
-# I'm using the pbuilder method for building, which is called by the
-# pdebuild script. If you change the distribution, then before doing
-# this, you have to call the following to create a new distribution
-# base tgz:
-#
-# if no basetgz, then create it.
-if [ ! -f /var/cache/pbuilder/$DISTRO-i386-base.tgz ]; then
-    echo "Create i386 pbuilder base.tgz"
-    sudo pbuilder --create --architecture i386 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
-fi
-
-if [ ! -f /var/cache/pbuilder/$DISTRO-amd64-base.tgz ]; then
-    echo "Create amd64 pbuilder base.tgz"
-    sudo pbuilder --create --architecture amd64 --distribution $DISTRO --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz
-fi
-
-#
-# Finally, actually call pdebuild for your distro:
-#
-
-# pdebuild --debsign-k "$PACKAGE_MAINTAINER_GPG_KEYID" -- ...etc
-pdebuild --architecture amd64 --buildresult /var/cache/pbuilder/$DISTRO-amd64-result -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz 
-pdebuild --architecture i386 --buildresult /var/cache/pbuilder/$DISTRO-i386-result -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
-
-echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
-
-popd
-
 # Now debsign the source:
+echo "pwd before debsign:"
+pwd
 debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${VERSION}-1_source.changes
 
+# Source the build-a-package script.
+. ../build_package
