@@ -47,15 +47,6 @@ DISTRO="$2"
 
 ITPBUG=742518
 
-dt=`date` # Fri, 16 May 2014 15:57:55 +0000
-cat > changelog <<EOF
-$PROGRAM_NAME ($VERSION-1) $DISTRO unstable; urgency=low
-
-  * Initial release (Closes: #$ITPBUG)
-
- -- $DEBFULLNAME <$DEBEMAIL>  Thu, 31 Dec 2015 15:57:55 +0000
-EOF
-
 ################################################################################
 #
 # Setting up the package. See http://www.debian.org/doc/manuals/maint-guide/first.en.html
@@ -136,7 +127,7 @@ mkdir -p $DEBNAME
 pushd $DEBNAME
 
 # Run dh_make.
-dh_make -s -f ../$DEBNAME.tar.gz
+dh_make -s -f ../$DEBNAME.tar.gz # DEBNAME.tar.gz is input
 
 ################################################################################
 #
@@ -160,6 +151,18 @@ rm -rf debian/*.EX
 # We don't need a README.Debian file to describe special instructions
 # about running this software on Debian.
 rm -f debian/README.Debian
+
+# For Debian packaging $DISTRO may be replaced by UNRELEASED unstable in the
+# first line.
+# FIXME: Utilise debchange aka dch to manage the changelog.
+dt=`date` # Fri, 16 May 2014 15:57:55 +0000
+cat > debian/changelog <<EOF
+$PROGRAM_NAME ($VERSION-1) $DISTRO; urgency=low
+
+  * Initial release (Closes: #$ITPBUG)
+
+ -- $DEBFULLNAME <$DEBEMAIL>  Thu, 31 Dec 2015 15:57:55 +0000
+EOF
 
 # Create the correct control file
 # Figure out the dependencies using:
@@ -314,8 +317,8 @@ fi
 #
 
 # pdebuild --debsign-k "$PACKAGE_MAINTAINER_GPG_KEYID" -- ...etc
-pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-amd64-result
-pdebuild -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --buildresult /var/cache/pbuilder/$DISTRO-i386-result
+pdebuild --architecture amd64 --buildresult /var/cache/pbuilder/$DISTRO-amd64-result -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz 
+pdebuild --architecture i386 --buildresult /var/cache/pbuilder/$DISTRO-i386-result -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz
 
 echo "Done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 
