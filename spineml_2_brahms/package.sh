@@ -142,7 +142,7 @@ Source: $PROGRAM_NAME
 Section: science
 Priority: optional
 Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
-Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), cmake, cdbs, brahms
+Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), cmake, cdbs, brahms, spineml-preflight
 Standards-Version: 3.9.3
 Homepage: https://github.com/SpineML/SpineML_2_BRAHMS
 

@@ -171,7 +171,7 @@ Homepage: http://bimpa.group.shef.ac.uk/SpineML/index.php/SpineCreator_-_A_Graph
 
 Package: spinecreator
 Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}, spineml-preflight
+Depends: \${shlibs:Depends}, \${misc:Depends}
 Recommends: xsltproc, gcc, spineml-2-brahms
 Description:  GUI for SpineML.
  Create, visualise and simulate networks of point spiking neural models.
