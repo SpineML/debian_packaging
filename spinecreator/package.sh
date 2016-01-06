@@ -193,9 +193,6 @@ copyin()
     cat ~/greenbrain/debian_packaging/spinecreator/$THEFILE > debian/$THEFILE
 }
 
-# Copy in the changelog
-copyin "changelog"
-
 # and the manpage
 copyin "spinecreator.1"
 
@@ -312,7 +309,5 @@ EOF
 
 popd
 
-# Now debsign the source:
-debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${VERSION}-1_source.changes
-
+echo "build_package..."
 . ../build_package

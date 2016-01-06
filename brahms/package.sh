@@ -262,10 +262,5 @@ DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr -DSTANDALONE_INSTALL=OFF -D
 EOF
 popd
 
-# Now debsign the source:
-echo "pwd before debsign:"
-pwd
-debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${VERSION}-1_source.changes
-
 # Source the build-a-package script.
 . ../build_package
