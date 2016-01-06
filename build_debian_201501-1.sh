@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Builds all 4 packages for Debian 8 (Jessie)
+# Builds all 4 packages for a Debian distro (e.g. Jessie)
 
 # IMPORTANT: Set
 # MIRRORSITE=http://ftp.uk.debian.org/debian/
@@ -72,7 +72,7 @@ fi
 
 # Build BRAHMS
 pushd brahms
-./package.sh ${BRAHMS_VER} ${DISTRO} master
+./package.sh ${BRAHMS_VER} ${DISTRO} ${BRAHMS_BR}
 sudo cp /var/cache/pbuilder/${DISTRO}-amd64-result/brahms_${BRAHMS_VER}-1_amd64.deb \
    /var/cache/pbuilder/localdeps/
 if [ "$?" -ne 0 ]; then
@@ -89,7 +89,7 @@ popd
 
 # Build SpineML_PreFlight
 pushd spineml_preflight
-./package.sh ${SPF_VER} ${DISTRO} master
+./package.sh ${SPF_VER} ${DISTRO} ${SPF_BR}
 sudo cp /var/cache/pbuilder/${DISTRO}-amd64-result/spineml-preflight_${SPF_VER}-1_amd64.deb \
     /var/cache/pbuilder/localdeps/
 if [ "$?" -ne 0 ]; then
@@ -106,7 +106,7 @@ popd
 
 # Build SpineML_2_BRAHMS (which depends on BRAHMS and SpineML_PreFlight)
 pushd spineml_2_brahms
-./package.sh ${S2B_VER} ${DISTRO} master
+./package.sh ${S2B_VER} ${DISTRO} ${S2B_BR}
 sudo cp /var/cache/pbuilder/${DISTRO}-amd64-result/spineml-2-brahms_${S2B_VER}-1_amd64.deb \
     /var/cache/pbuilder/localdeps/
 sudo cp /var/cache/pbuilder/${DISTRO}-i386-result/spineml-2-brahms_${S2B_VER}-1_i386.deb \
@@ -115,7 +115,7 @@ popd
 
 # Build SpineCreator
 pushd spinecreator
-./package.sh ${SC_VER} ${DISTRO} master
+./package.sh ${SC_VER} ${DISTRO} ${SC_BR}
 sudo cp /var/cache/pbuilder/${DISTRO}-amd64-result/spinecreator_${SC_VER}-1_amd64.deb \
     /var/cache/pbuilder/localdeps/
 sudo cp /var/cache/pbuilder/${DISTRO}-i386-result/spinecreator_${SC_VER}-1_i386.deb \
