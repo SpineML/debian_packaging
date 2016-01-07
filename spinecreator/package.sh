@@ -194,12 +194,12 @@ copyin()
 }
 
 # and the manpage
-copyin "spinecreator.1"
+#copyin "spinecreator.1"
 
 # menu
 cat > debian/menu <<EOF
 ?package(spinecreator):needs="X11" section="Applications/Science/Biology"\
-  title="spinecreator" command="/usr/bin/spinecreator"
+  title="SpineCreator" command="spinecreator" icon="/usr/share/pixmaps/spinecreator.png"
 
 EOF
 
