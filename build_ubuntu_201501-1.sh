@@ -10,32 +10,6 @@ if [ x"$ms" = "x" ]; then
     exit
 fi
 
-# To run this, you need to have set up local package dependencies, with this
-# in /etc/pbuilderrc:
-#
-## How to include local packages in the build:
-#OTHERMIRROR="deb [trusted=yes] file:///var/cache/pbuilder/localdeps ./"
-#BINDMOUNTS="/var/cache/pbuilder/localdeps"
-## the hook dir may already be set/populated!
-#HOOKDIR="/var/cache/pbuilder/hookd"
-## this is necessary for running ''apt-ftparchive'' in the hook below
-#EXTRAPACKAGES="apt-utils"
-#
-# And this in /var/cache/pbuilder/hookd:
-#
-#s@host:~$ cat /var/cache/pbuilder/hookd/D05deps 
-##!/bin/bash
-#echo "D05deps script"
-#(cd /var/cache/pbuilder/localdeps; apt-ftparchive packages . > Packages)
-#apt-get update
-#
-# This has to be included BEFORE the base.tgz files are built.
-#
-# Resulting source package data is in the package subdirectories here
-# (brahms, spineml_2_brahms, etc). Finished binary packages should be
-# found in /var/cache/pbuilder/localdeps and also in the
-# pbuilder/$DISTRO-amd64/i386-results directories
-
 if [ -z "$1" ]; then
     echo "Pass in distro tag (trusty or wily etc)"
     exit

@@ -22,6 +22,32 @@ components which BRAHMS executes.
 SpineML_PreFlight - Code to pre-parse a SpineML model so that it is
 ready for SpineML_2_BRAHMS or any other simulation backend.
 
+Running the scripts
+
+To run the scripts, you need to have set up local package dependencies, with this in /etc/pbuilderrc:
+
+# How to include local packages in the build:
+OTHERMIRROR="deb [trusted=yes] file:///var/cache/pbuilder/localdeps ./"
+BINDMOUNTS="/var/cache/pbuilder/localdeps"
+# the hook dir may already be set/populated!
+HOOKDIR="/var/cache/pbuilder/hookd"
+# this is necessary for running ''apt-ftparchive'' in the hook below
+EXTRAPACKAGES="apt-utils"
+
+And this in /var/cache/pbuilder/hookd:
+
+s@host:~$ cat /var/cache/pbuilder/hookd/D05deps 
+#!/bin/bash
+echo "D05deps script"
+(cd /var/cache/pbuilder/localdeps; apt-ftparchive packages . > Packages)
+apt-get update
+
+This has to be included BEFORE the base.tgz files are built.
+
+You have to create the Packages file too:
+
+sudo touch /var/cache/pbuilder/localdeps/Packages
+
 These scripts have been developed on Seb's laptop and are currently
 Seb-specific, meaning that if you want to run them, you'll have to
 review them to change from using Seb's signing keys to your own as
@@ -31,13 +57,16 @@ The scripts should checkout the SpineCreator, brahms,
 SpineML_PreFlight and SpineML_2_BRAHMS source code into src/
 subdirectories
 
-Now cd into debian_packaging/brahms and run the
+You can either run the package.sh scripts one by one, or use the
+build_ubuntu_NNNN.sh scripts.
+
+To use package.sh; cd into debian_packaging/brahms and run the
 package.sh script.  You'll have to install a number of Debian
 developer packages, including pbuilder. Here are the packaging dependencies:
 
  sudo apt-get install build-essential autoconf automake autotools-dev
                       dh-make debhelper devscripts fakeroot xutils
-                      lintian pbuilder cdbs
+                      lintian pbuilder cdbs libsoap-lite-perl
 
 Actually, some of these may not be strictly necessary on the host
 system. I believe debhelper only needs to be installed within the
