@@ -89,6 +89,7 @@ if [ ! -d $DEBNAME ]; then
     mv brahms $DEBNAME
     pushd $DEB
     git checkout -b "$GIT_BRANCH_REQUEST"
+    git branch --set-upstream-to=origin/$GIT_BRANCH_REQUEST $GIT_BRANCH_REQUEST
     popd
 else
     pushd $DEBNAME

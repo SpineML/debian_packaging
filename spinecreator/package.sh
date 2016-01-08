@@ -83,6 +83,7 @@ if [ ! -d $DEBNAME ]; then
     mv $GIT_REPO_DIR $DEBNAME
     pushd $DEBNAME
     git checkout -b $GIT_BRANCH_REQUEST
+    git branch --set-upstream-to=origin/$GIT_BRANCH_REQUEST $GIT_BRANCH_REQUEST
     popd
 else
     pushd $DEBNAME
