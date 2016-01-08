@@ -5,3 +5,4 @@ brahms_*_source.changes
 brahms_*.orig.tar.gz
 brahms-*.tar.gz
 brahms-[0-9].[0-9].[0-9]
+src
