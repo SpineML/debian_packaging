@@ -1,0 +1,22 @@
+# Checkout or update the git repository. Sourced from package.sh and
+# pkg_update.sh scripts.
+if [ ! -d $DEBNAME ]; then
+    if [ -d ./$GIT_REPO_DIR ]; then
+        # Remove and then re-clone
+        rm -rf $GIT_REPO_DIR $DEBNAME
+    fi
+    git clone https://github.com/SpineML/$GIT_REPO_DIR
+    mv $GIT_REPO_DIR $DEBNAME
+    pushd $DEBNAME
+    git checkout -b $GIT_BRANCH_REQUEST
+    git branch --set-upstream-to=origin/$GIT_BRANCH_REQUEST $GIT_BRANCH_REQUEST
+    popd
+else
+    pushd $DEBNAME
+    git checkout $GIT_BRANCH_REQUEST
+    if [ "$?" -ne 0 ]; then
+        git checkout -b $GIT_BRANCH_REQUEST
+    fi
+    git pull
+    popd
+fi
