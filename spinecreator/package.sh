@@ -36,6 +36,7 @@ if [ ! -z $3 ]; then
 fi
 
 VERSION="$1"
+DEBVERSION="$1"-1
 DISTRO="$2"
 ITPBUG=810045
 
@@ -57,15 +58,15 @@ DEBORIG=$PROGRAM_NAME"_$VERSION.orig"
 rm -rf $DEBNAME
 rm -f $DEBNAME.tar.gz
 rm -f $DEBORIG.tar.gz
-rm -f $PROGRAM_NAME"_$VERSION-1.debian.tar.gz"
-rm -f $PROGRAM_NAME"_$VERSION-1.dsc"
-rm -f $PROGRAM_NAME"_$VERSION-1_amd64.changes"
-rm -f $PROGRAM_NAME"_$VERSION-1_amd64.deb"
-rm -f $PROGRAM_NAME"_$VERSION-1_amd64.build"
-rm -f $PROGRAM_NAME"_$VERSION-1_i386.changes"
-rm -f $PROGRAM_NAME"_$VERSION-1_i386.deb"
-rm -f $PROGRAM_NAME"_$VERSION-1_i386.build"
-rm -f $PROGRAM_NAME"_$VERSION-1_source.changes"
+rm -f $PROGRAM_NAME"_${DEBVERSION}.debian.tar.gz"
+rm -f $PROGRAM_NAME"_${DEBVERSION}.dsc"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_amd64.changes"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_amd64.deb"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_amd64.build"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_i386.changes"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_i386.deb"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_i386.build"
+rm -f $PROGRAM_NAME"_${DEBVERSION}_source.changes"
 
 # Remove temporary "upstream tarball" created from the git repo
 rm -rf /tmp/$DEBNAME
@@ -143,7 +144,7 @@ rm -f debian/README.Debian
 # Create the fresh debian/changelog.
 rm -f debian/changelog
 debchange --create --package $PROGRAM_NAME --closes $ITPBUG \
-    --distribution $DISTRO --urgency low --newversion ${VERSION}-1
+    --distribution $DISTRO --urgency low --newversion ${DEBVERSION}
 
 # Create the correct control file
 # Figure out the dependencies using:
