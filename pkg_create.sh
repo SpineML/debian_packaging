@@ -7,6 +7,10 @@
 
 pwd
 
+# a "bailout error message" function. Allows me to write error tests like:
+# if [ "$?" -ne 0 ]; then bailout "some message"; fi
+. ../bailout
+
 # Source the program name and GIT_REPO_DIR
 . ./scripts/program_name
 
@@ -33,7 +37,7 @@ export PATH=/usr/bin:/bin
 # Get version, distro, git branch from the command line
 if [ -z $2 ]; then
     usage
-    exit
+    exit 1
 fi
 GIT_BRANCH_REQUEST="master"
 if [ ! -z $3 ]; then
@@ -48,15 +52,12 @@ DISTRO="$2"
 . ./scripts/itpbug
 
 # The deb source directory will be created with this directory name
-DEBNAME=$PROGRAM_NAME-$VERSION
+DEBNAME=${PROGRAM_NAME}-${VERSION}
 
 # The "orig" tarball will have this name
 DEBORIG=${PROGRAM_NAME}_${VERSION}.orig
 
 # Clean up any previously generated tarballs and files
-rm -rf $DEBNAME
-rm -f $DEBNAME.tar.gz
-rm -f $DEBORIG.tar.gz
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}.debian.tar.gz
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}.dsc
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_amd64.changes
@@ -67,59 +68,16 @@ rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.deb
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.build
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_source.changes
 
-# FIXME: Make the git checkout/update a separate script, to be called
-# separately to build the .orig.tar.gz file. I get into trouble with
-# launchpad otherwise.
+# Unpack deborig
+rm -rf ${DEBNAME}
+tar xvf ${DEBORIG}.tar.gz
+if [ "$?" -ne 0 ]; then bailout "unpacking deborig"; fi
 
-# Our "upstream" tarball will be checked out in ./src
-mkdir -p src
-pushd src
-
-if [ ! -d $DEBNAME ]; then
-    if [ -d ./$GIT_REPO_DIR ]; then
-        # Remove and then re-clone
-        rm -rf $GIT_REPO_DIR $DEBNAME
-    fi
-    git clone $GIT_ACCOUNT/$GIT_REPO_DIR
-    mv $GIT_REPO_DIR $DEBNAME
-    pushd $DEBNAME
-    git checkout -b $GIT_BRANCH_REQUEST
-    git branch --set-upstream-to=origin/$GIT_BRANCH_REQUEST $GIT_BRANCH_REQUEST
-    popd
-else
-    pushd $DEBNAME
-    git checkout $GIT_BRANCH_REQUEST
-    git pull
-    popd
-fi
-
-pushd $DEBNAME
-# Get git revision information
-GIT_BRANCH=`git branch| grep \*| awk -F' ' '{ print $2; }'`
-GIT_LAST_COMMIT_SHA=`git log -1 --oneline | awk -F' ' '{print $1;}'`
-GIT_LAST_COMMIT_DATE=`git log -1 | grep Date | awk -F 'Date:' '{print $2;}'| sed 's/^[ \t]*//'`
-
-# Run any commands that want to be done in the source code
-# post-checkout. Only required for SpineCreator
-. ../../scripts/post_git_checkout
-
-popd # from $DEBNAME
-
-popd # from src/
-
-# Now create $DEBNAME.tar.gz
-if [ -f $DEBNAME.tar.gz ]; then
-    rm -f $DEBNAME.tar.gz
-fi
-
-tar czf $DEBNAME.tar.gz --exclude-vcs -C./src $DEBNAME
-
-# Clean up our source directory and then create it and pushd into it
-mkdir -p $DEBNAME
-pushd $DEBNAME
+pushd ${DEBNAME}
 
 # Run dh_make.
-dh_make -s -f ../$DEBNAME.tar.gz
+dh_make -s
+if [ "$?" -ne 0 ]; then bailout "dh_make"; fi
 
 # We should have no upstream bugs to fix, as we ARE the upstream
 # maintainers.  However, the dquilt stuff would normally go here.
@@ -134,11 +92,12 @@ rm -f debian/README.Debian
 
 # Create the fresh debian/changelog.
 rm -f debian/changelog
-debchange --create --package ${PROGRAM_NAME} --closes $ITPBUG \
-    --distribution $DISTRO --urgency low --newversion ${NEWDEBVERSION}
+debchange --create --package ${PROGRAM_NAME} --closes ${ITPBUG} \
+    --distribution ${DISTRO} --urgency low --newversion ${NEWDEBVERSION}
+if [ "$?" -ne 0 ]; then bailout "debchange"; fi
 
 DEBHELPER_COMPAT_LEVEL=9
-echo $DEBHELPER_COMPAT_LEVEL > debian/compat
+echo ${DEBHELPER_COMPAT_LEVEL} > debian/compat
 
 . ../scripts/debian_control
 
@@ -158,8 +117,8 @@ ${PROGRAM_NAME} for Debian
 This package was produced from a source tarball built from the git repository
 at ${GIT_ACCCOUNT}/${GIT_REPO_DIR}
 
-The git commit revision is: $GIT_LAST_COMMIT_SHA of $GIT_LAST_COMMIT_DATE on
-the $GIT_BRANCH branch.
+The git commit revision is: ${GIT_LAST_COMMIT_SHA} of ${GIT_LAST_COMMIT_DATE} on
+the ${GIT_BRANCH} branch.
 EOF
 
 popd

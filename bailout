@@ -1,0 +1,10 @@
+function bailout () {
+    if [ ! -z "$1" ]; then
+        echo -n "Error: "
+        echo -n "$1;"
+        echo " exiting."
+    else
+        echo "Error, exiting"
+    fi
+    exit 1
+}
