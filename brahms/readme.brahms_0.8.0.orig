@@ -1,0 +1,8 @@
+The brahms_0.8.0.orig.tar.gz here is the one uploaded to mentors.debian.net
+I uploaded a different on to launchpad, by mistake. I'll revision control
+the mentors.debian.net one here.
+
+In future, I'll keep a separate version suffix for all Ubuntu packages. For
+now, the package data on launchpad is the definitive versions for updating
+Ubuntu packages. The various files maintained in this git repo are the Debian
+package files.
