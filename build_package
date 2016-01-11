@@ -4,11 +4,11 @@
 #
 #
 
-echo "unpacking $DEBORIG.tar.gz:"
-tar xvf $DEBORIG.tar.gz
+#echo "unpacking $DEBORIG.tar.gz:"
+#tar xvf $DEBORIG.tar.gz
 
 echo "Ready to build..."
-pushd $DEBNAME
+pushd ${DEBNAME}
 
 echo "Clear CFLAGS etc, so that debian rules will set them up"
 unset CPPFLAGS
@@ -22,8 +22,10 @@ unset LDFLAGS
 
 echo "pdebuild amd64 package..."
 pdebuild --architecture amd64 --buildresult /var/cache/pbuilder/$DISTRO-amd64-result -- --basetgz /var/cache/pbuilder/$DISTRO-amd64-base.tgz  --debbuildopts " -j4 "
+if [ "$?" -ne 0 ]; then bailout "pdebuild of amd64 package"; fi
 echo "pdebuild i386 package..."
 pdebuild --architecture i386 --buildresult /var/cache/pbuilder/$DISTRO-i386-result -- --basetgz /var/cache/pbuilder/$DISTRO-i386-base.tgz --debbuildopts " -j4 "
+if [ "$?" -ne 0 ]; then bailout "pdebuild of i386 package"; fi
 echo "build_package done. Look in /var/cache/pbuilder/$DISTRO-[i386|amd64]-result/ for the debs"
 
 popd
@@ -32,3 +34,4 @@ popd
 # built so that the _source.changes file exists):
 echo "Calling debsign"
 debsign -S -k"$PACKAGE_MAINTAINER_GPG_KEYID" ${PROGRAM_NAME}_${NEWDEBVERSION}_source.changes
+if [ "$?" -ne 0 ]; then bailout "Signing of source.changes file"; fi
