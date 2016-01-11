@@ -1,0 +1,21 @@
+cat > debian/control <<EOF
+Source: $PROGRAM_NAME
+Section: science
+Priority: optional
+Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
+Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), cmake, cdbs, brahms, spineml-preflight
+Standards-Version: 3.9.3
+Homepage: https://github.com/SpineML/SpineML_2_BRAHMS
+
+Package: $PROGRAM_NAME
+Architecture: any
+Depends: \${shlibs:Depends}, \${misc:Depends}, brahms
+Description: SpineML to BRAHMS execution backend
+ Code generation scripts for transforming a SpineML neural model into
+ a running BRAHMS system. This includes XSL scripts to convert a
+ SpineML model into SystemML format with compiled components. The
+ scripts convert SpineML component XML into C++ code which is then
+ compiled into shared object code. Converts SpineML network and
+ experiment XML into the SystemML XML. Finally, the simulation is
+ executed.
+EOF

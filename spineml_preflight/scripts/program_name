@@ -1,0 +1,3 @@
+PROGRAM_NAME=spineml-preflight
+GIT_REPO_DIR=SpineML_PreFlight
+GIT_ACCOUNT="https://github.com/SpineML"

@@ -1,0 +1,33 @@
+# Create the correct control file
+# Figure out the dependencies using:
+# objdump -p /path/to/${PROGRAM_NAME} | grep NEEDED
+# And for each line dpkg -S library.so.X
+#
+# NB: I'll add Brahms to the Recommends line, when I've created a
+# debian package for it. Or perhaps these would be best in Depends?
+#
+# extra libs? libgvc6 perhaps. Not perfectly sure of graphviz-dev
+# version that we have to be greater than. approx 2.32.
+#
+# Dependencies will be some of:
+# qtdeclarative5-dev, qtdeclarative5-dev-tools, libqt5declarative5,
+# qtquick1-5-dev, qtscript5-dev, libqt5svg5-dev, qttools5-dev-tools,
+# qttools5-dev, libqt5opengl5-dev, qtquick1-qml-plugins
+#
+cat > debian/control <<EOF
+Source: spinecreator
+Section: x11
+Priority: optional
+Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
+Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), libc6-dev, libstdc++-dev, libglu1-mesa-dev, python2.7-dev, cdbs, graphviz-dev (>= 2.32.0), qt5-qmake, qttools5-dev, qttools5-dev-tools, libqt5opengl5-dev, libqt5svg5-dev, qt5-default
+Standards-Version: 3.9.3
+Homepage: http://bimpa.group.shef.ac.uk/SpineML/index.php/SpineCreator_-_A_Graphical_Tool
+
+Package: spinecreator
+Architecture: any
+Depends: \${shlibs:Depends}, \${misc:Depends}
+Recommends: xsltproc, gcc, spineml-2-brahms
+Description:  GUI for SpineML.
+ Create, visualise and simulate networks of point spiking neural models.
+ For use with the SpineML XML format and compatible simulators.
+EOF

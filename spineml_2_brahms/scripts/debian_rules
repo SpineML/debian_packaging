@@ -1,0 +1,10 @@
+# The rules for building.
+echo "Doing debian/rules..."
+cat > debian/rules <<EOF
+#!/usr/bin/make -f
+# -*- makefile -*-
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/cmake.mk
+DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_INSTALL_PREFIX=/usr
+EOF

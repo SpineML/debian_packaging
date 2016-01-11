@@ -1,0 +1,3 @@
+# Ensure spec file exists
+qmake neuralNetworks.pro -r -spec linux-g++
+make clean
