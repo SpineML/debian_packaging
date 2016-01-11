@@ -1,0 +1,45 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Mon, 11 Jan 2016 11:54:52 +0000
+Source: brahms
+Binary: brahms
+Architecture: source
+Version: 0.8.0-1
+Distribution: unstable
+Urgency: low
+Maintainer: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Changed-By: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Description:
+ brahms     - Middleware for integrated systems computation
+Closes: 742518
+Changes:
+ brahms (0.8.0-1) unstable; urgency=low
+ .
+   * Initial release. (Closes: #742518: ITP: brahms -- Modular execution
+     framework for SystemML)
+Checksums-Sha1:
+ 8cba4142e79fc29e401f4ece3f5e07c72bb4e514 1456 brahms_0.8.0-1.dsc
+ cc43742807b06b92425f414075a4af5508c949ab 4310017 brahms_0.8.0.orig.tar.gz
+ c3c774c85eda91ce79781b804ca8734e94691674 1896 brahms_0.8.0-1.debian.tar.xz
+Checksums-Sha256:
+ 86950f947fb49257997a29dccc1ff42549daa07bdfebb8efc89e15084d2f496a 1456 brahms_0.8.0-1.dsc
+ d848bbacbc1749b7a44e299772082aa81ec963ef12d8bede699845f52b9b9cf9 4310017 brahms_0.8.0.orig.tar.gz
+ edc8559345763e6237b809c89d43eff29d32cdc56060327ee41f15db36adcd63 1896 brahms_0.8.0-1.debian.tar.xz
+Files:
+ bab6a09682de24fe658204b428f97c81 1456 science optional brahms_0.8.0-1.dsc
+ f324d49c8d44e22a2095bcfd590e8a7c 4310017 science optional brahms_0.8.0.orig.tar.gz
+ da889defee4626a60d083fa205433d05 1896 science optional brahms_0.8.0-1.debian.tar.xz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWk55BAAoJEIVhKD7pyNosQoMH/38LYjMIy/MggEJZEcb02rVg
+ya70lzGNWLZ4DEBHeK5Bcq94Q5rcc7rRZ78DxMVeFm8NfVdgLBWHtS17bb11FP0t
+Y14ZGIhWPOZc5r4mPDf1aRObeUhEFBRXxLXb6MmNt/tllk+1N0QJTW7yc/WlpF78
+ziFdh03MPu70SsivrZDHLRkhsZczAtH7vp5JFxx53FxEFLXlFT+NJ37Q+mUHFRPk
+25cQl6XMoBAIpu6/GThtt6rFQBsJKZjnQQ/QDtNUnwWOYdrUCgTYwriRxFrBZfD+
+cjoEj2gjYgF4GLomdllyfy5UzkttQsszNN7F0Lw2r4WFQXeDa8A8Xl2ZE/15pmI=
+=Z7pV
+-----END PGP SIGNATURE-----
