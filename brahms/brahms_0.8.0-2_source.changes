@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Mon, 18 Jan 2016 22:31:32 +0000
+Source: brahms
+Binary: brahms
+Architecture: source
+Version: 0.8.0-2
+Distribution: unstable
+Urgency: low
+Maintainer: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Changed-By: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Description:
+ brahms     - Middleware for integrated systems computation
+Changes:
+ brahms (0.8.0-2) unstable; urgency=low
+ .
+   * Updates Standards from 3.9.3 to 3.9.6.
+Checksums-Sha1:
+ dfe50e21b0674932798e21d1e0899a7eab27dce2 1456 brahms_0.8.0-2.dsc
+ 4ee66d6a9e399b406f84ff556844285669d69ee2 1940 brahms_0.8.0-2.debian.tar.xz
+Checksums-Sha256:
+ 995d60640f0f00352e2ca3c75a9d8d8d9cab033e0c11bb122661b38aa0bd0eb0 1456 brahms_0.8.0-2.dsc
+ d898a54bfddb9298eaeffc29f25c359dbf6cb458885e23048dce8cdf6428a1ad 1940 brahms_0.8.0-2.debian.tar.xz
+Files:
+ c077f60edf27097eee79f077e48c28b8 1456 science optional brahms_0.8.0-2.dsc
+ cce281f44ccbc3382b36e2649d58ad17 1940 science optional brahms_0.8.0-2.debian.tar.xz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWnWwBAAoJEIVhKD7pyNosYzUH/1y/Hwtt98+Ld9QGA7Yb3Fws
+H6y2F/MvugEON4q5OJtLuo+KK7WHTO8EgROahx+dmG0pumxGFXZBf8LAL5UzMdHp
+gzwRwSFsjWYuK3qVWGp0kBR6bL49fvMIgsD2K2BsxEoIrXiXtAsyPKTeGVHrfkxP
+btmvD60gcz1NyO4nAKRKqlpcwm5zJrlYBhDuFVUZ8gpEilYVHJkDi17Vg9OMFYXh
+YjVWZuk5IfvwNx6lyvYrpYs3eKqakSQnA6jHGlqdwWzyqxPi9eY5pA+79wOR+g0p
+vmFFfrM0sYDxg67HzUV8jbYx9n22n20sZhUGq7mMWcINPRNBaa7+md1LmlGAPQ8=
+=kgnp
+-----END PGP SIGNATURE-----
