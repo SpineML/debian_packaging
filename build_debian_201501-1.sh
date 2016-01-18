@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Now a little out of date. package.sh needs to be changed for pkg_create.sh"
+#exit 1
+
 # Builds all 4 packages for a Debian distro (e.g. Jessie)
 
 # IMPORTANT: Set
@@ -39,7 +42,7 @@ fi
 
 # What versions/branches?
 if [ -z "$1" ]; then
-    echo "Pass in distro tag (jessie or sid etc)"
+    echo "Pass in distro tag (jessie or unstable etc)"
     exit
 fi
 
@@ -69,6 +72,8 @@ fi
 if [ ! -f /var/cache/pbuilder/$DISTRO-amd64-base.tgz ]; then
     sudo pbuilder --create --architecture amd64 --distribution ${DISTRO} --basetgz /var/cache/pbuilder/${DISTRO}-amd64-base.tgz --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
 fi
+
+exit 0
 
 # Build BRAHMS
 pushd brahms
