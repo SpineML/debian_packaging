@@ -60,14 +60,12 @@ rm -f $DEBNAME.tar.gz
 rm -i $DEBORIG.tar.gz
 
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}.debian.tar.gz
-rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}.dsc
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_amd64.changes
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_amd64.deb
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_amd64.build
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.changes
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.deb
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.build
-rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_source.changes
 
 # Our "upstream" tarball will be checked out in ./src
 mkdir -p src
