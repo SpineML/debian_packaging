@@ -1,0 +1,8 @@
+spineml-2-brahms for Debian
+---------------------------
+
+This package was produced from a source tarball built from the git repository
+at https://github.com/SpineML/SpineML_2_BRAHMS
+
+The git commit revision is: e225fc6 of Tue Jan 12 12:46:59 2016 +1100 on
+the release-1.1.0 branch.
