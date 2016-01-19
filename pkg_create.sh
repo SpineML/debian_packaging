@@ -109,8 +109,6 @@ fi
 
 . ../scripts/debian_copyright
 
-. ../scripts/debian_menu
-
 . ../scripts/debian_rules
 
 # The source readme is copied in from a file created by pkg_curatesrc.sh

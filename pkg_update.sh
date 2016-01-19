@@ -91,8 +91,6 @@ fi
 
 . ../scripts/debian_copyright
 
-. ../scripts/debian_menu
-
 . ../scripts/debian_rules
 
 # The source readme normally remains the same, but it'll do no harm to

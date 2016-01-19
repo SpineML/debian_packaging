@@ -85,8 +85,6 @@ echo ${DEBHELPER_COMPAT_LEVEL} > debian/compat
 
 . ../scripts/debian_copyright
 
-. ../scripts/debian_menu
-
 . ../scripts/debian_rules
 
 # The source readme needs to be updated
