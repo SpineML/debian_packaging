@@ -12,7 +12,7 @@ Section: science
 Priority: optional
 Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
 Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), cmake, cdbs, libpopt-dev, doxygen
-Standards-Version: 3.9.3
+Standards-Version: 3.9.6
 Homepage: https://github.com/SpineML/SpineML_PreFlight
 
 Package: $PROGRAM_NAME

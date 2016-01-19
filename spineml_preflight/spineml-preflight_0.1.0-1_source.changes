@@ -1,0 +1,45 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Tue, 19 Jan 2016 00:12:33 +0000
+Source: spineml-preflight
+Binary: spineml-preflight
+Architecture: source
+Version: 0.1.0-1
+Distribution: unstable
+Urgency: low
+Maintainer: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Changed-By: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Description:
+ spineml-preflight - Simulator independent initial processing for SpineML models
+Closes: 810026
+Changes:
+ spineml-preflight (0.1.0-1) unstable; urgency=low
+ .
+   * Initial release. (Closes: #810026: ITP: spineml-preflight --
+     Simulator independent initial processing for SpineML models)
+Checksums-Sha1:
+ fbb1e0a32ff6d3b6489a8520586a25b1e046235b 1490 spineml-preflight_0.1.0-1.dsc
+ c1e564b923e8c787a702a0b48e519e1f103d87ed 88755 spineml-preflight_0.1.0.orig.tar.gz
+ dd25d722f4f757e9580e48814e30b8c81ba2552b 1632 spineml-preflight_0.1.0-1.debian.tar.xz
+Checksums-Sha256:
+ 0721c654d82c4617273a568eae63f22b0aeb0a142dac956bfb5bb66e6e53a608 1490 spineml-preflight_0.1.0-1.dsc
+ 447cc722ea1aaa08af4d47134b1d7fad6c00b81ef8cc5cbaf76839886d6f5903 88755 spineml-preflight_0.1.0.orig.tar.gz
+ 48bfd8b30f1d30e5b59a1e33e85eba87cbf21d3343db0aecf370325eb59e803f 1632 spineml-preflight_0.1.0-1.debian.tar.xz
+Files:
+ 455c8a5ccaada6758f6607ccb8f3b134 1490 science optional spineml-preflight_0.1.0-1.dsc
+ df4a7cca3ba08c817c5ec64f0396d099 88755 science optional spineml-preflight_0.1.0.orig.tar.gz
+ 26b34a698a09a7bb2563952c4334bcdd 1632 science optional spineml-preflight_0.1.0-1.debian.tar.xz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWnYPIAAoJEIVhKD7pyNosFDYH/25+B3IaHjz1mUKr0TggotEe
+ulfHULoa3NLW2UmvLUPHkim0KNAu3yMFTrwNS+xo4gqU3UQPASmhFCeaAyJT2ysk
+kwlMzngZrEdFX5zj0Zlb49mMtyQ4/YCYi4R896R8j1F96HEshqVzaHOv8h48N6Y5
+7AMcfa4Sc81n5mQuDMqcrqNqpyi53g/9kQMCNO4zQ8i5SzK0FP2CUjAd5gLqA7Sl
+MzHo07S08FmTHztAqCwPws7xottAibfV3lIKMOiQ0aVw3oKAkGgvOxJzuO1CNhEj
+jBJllwAYWS/3+uC9KxB9r6ptFQY+vDrqz+tu/8sRNVs4Ucl+/tlyN48H7rf8jsk=
+=8xna
+-----END PGP SIGNATURE-----
