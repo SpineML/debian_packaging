@@ -20,7 +20,7 @@ Section: x11
 Priority: optional
 Maintainer: $PACKAGE_MAINTAINER_GPG_IDENTITY
 Build-Depends: debhelper (>= $DEBHELPER_COMPAT_LEVEL.0.0), libc6-dev, libstdc++-dev, libglu1-mesa-dev, python2.7-dev, cdbs, graphviz-dev (>= 2.32.0), qt5-qmake, qttools5-dev, qttools5-dev-tools, libqt5opengl5-dev, libqt5svg5-dev, qt5-default
-Standards-Version: 3.9.3
+Standards-Version: 3.9.6
 Homepage: http://bimpa.group.shef.ac.uk/SpineML/index.php/SpineCreator_-_A_Graphical_Tool
 
 Package: spinecreator

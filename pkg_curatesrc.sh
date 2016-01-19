@@ -69,10 +69,6 @@ rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.deb
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_i386.build
 rm -f ${PROGRAM_NAME}_${NEWDEBVERSION}_source.changes
 
-# FIXME: Make the git checkout/update a separate script, to be called
-# separately to build the .orig.tar.gz file. I get into trouble with
-# launchpad otherwise.
-
 # Our "upstream" tarball will be checked out in ./src
 mkdir -p src
 pushd src
