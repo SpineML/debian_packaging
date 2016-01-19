@@ -1,0 +1,8 @@
+brahms for Debian
+-----------------
+
+This package was produced from a source tarball built from the git repository
+at https://github.com/sebjameswml/brahms
+
+The git commit revision is: b2f09d6 of Wed Dec 30 14:58:43 2015 +0000 on
+the release-0.8.0 branch.
