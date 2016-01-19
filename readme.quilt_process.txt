@@ -4,7 +4,8 @@ We're using dquilt, an alias for:
 
  quilt --quiltrc=/home/seb/.quiltrc-dpkg
 
-First, apply existing patches:
+First, apply existing patches. This is done within the $DEBNAME dir - so
+in brahms-0.8.0 which is created by pkg-update.sh or similar:
 
  dquilt push -a
 
@@ -26,6 +27,16 @@ When finished, remove all patches, ready for the next build:
 
  dquilt pop -a
 
+Now there is a debian/patches directory. What will happen to it when I re-run
+pkg_update.sh? They'll get removed, so copy debian/patches to debian_patches
+
+cp -Ra debian/patches ../debian_patches
+
+pkg_update.sh will copy these in when it updates the package from the old
+.orig.tar.gz and .debian.tar.[gx]z files.
+
+
+OLD:
 After you've popped, you can then run
 
  dpkg-buildpackage -rfakeroot
