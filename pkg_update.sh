@@ -71,6 +71,13 @@ if [ "$?" -ne 0 ]; then bailout "debchange"; fi
 # Obtain the new debian version from the changelog:
 NEWDEBVERSION=`head -n1 debian/changelog | awk -F '[(]' '{ print \$2; }'| awk -F '[)]' '{ print \$1; }'`
 
+# Add any patches here. How to manage this process?
+# copy in patches, so that they add to any patches already existing in the debian.tar.gz:
+if [ -d ../debian_patches ]; then
+    mkdir -p debian/patches
+    cp -Ra ../debian_patches/* debian/patches/
+fi
+
 DEBHELPER_COMPAT_LEVEL=9
 echo ${DEBHELPER_COMPAT_LEVEL} > debian/compat
 

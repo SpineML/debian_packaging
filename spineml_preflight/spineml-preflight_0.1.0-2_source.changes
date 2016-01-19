@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Tue, 19 Jan 2016 10:21:48 +0000
+Source: spineml-preflight
+Binary: spineml-preflight
+Architecture: source
+Version: 0.1.0-2
+Distribution: unstable
+Urgency: low
+Maintainer: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Changed-By: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Description:
+ spineml-preflight - Simulator independent initial processing for SpineML models
+Changes:
+ spineml-preflight (0.1.0-2) unstable; urgency=low
+ .
+   * Adds correct git version information to README.source file
+Checksums-Sha1:
+ 6e342206232f1717e0cc439785bd074168592a56 1490 spineml-preflight_0.1.0-2.dsc
+ 72b48beb247110628e73a2a3b1b517f32780b7aa 1700 spineml-preflight_0.1.0-2.debian.tar.xz
+Checksums-Sha256:
+ 51ca0223c8b5b3495e9c7105b554c581f7d3829f56ae4e2d66c1727b88fdce57 1490 spineml-preflight_0.1.0-2.dsc
+ 69ccc262d38d49af615f01cef4fe3e98091a52b4b1e56179215fda3b6f1ebab6 1700 spineml-preflight_0.1.0-2.debian.tar.xz
+Files:
+ 73b1ac0b7e5514ff970ea98264c115fa 1490 science optional spineml-preflight_0.1.0-2.dsc
+ af600fbb2fbe1b5806c936db091926e6 1700 science optional spineml-preflight_0.1.0-2.debian.tar.xz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWnhDkAAoJEIVhKD7pyNosJjUIAICG6QZ/8/6yMup8pBnWPuM4
+i9x4lYfhlCYBb0g9H65AZ6QxtOckkzom3FjuCnorEJEyvrH9ENfB+Lbf1R3KBwO3
+lrgrm73tPkCo7+LdsYWAzPj7oTEEUVucAfNrLs5Pm1mVS6MrbqBqAOrhi9R3CSwo
+CQu8EVhWNMesOwCWwxtNI4eiL6Qs1zRMbZEUpvaPsPdinEdBqPvJokMr5aJIpN40
+Ppb94msxOEzlGkHSiDvCMVPJIGjOtvOReIxH50LcMLW4dS2ZWLg2hNESXKeNBWVs
+ePl5g5mgNVBbPPB+gDhFwgh+FLdaN9ZFG3VkNZVEgEzfVgvrD6ZZKXY1rAy9pqU=
+=Cb6v
+-----END PGP SIGNATURE-----
