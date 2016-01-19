@@ -84,7 +84,10 @@ echo ${DEBHELPER_COMPAT_LEVEL} > debian/compat
 
 . ../scripts/debian_rules
 
-# The source readme remains the same
+# The source readme normally remains the same, but it'll do no harm to
+# copy it in again, in case we wanted to add anything.
+cp ../debian_README.source debian/README.source
+if [ "$?" -ne 0 ]; then bailout "failed to copy in debian_README.source"; fi
 
 popd
 
