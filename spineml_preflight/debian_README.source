@@ -4,5 +4,5 @@ spineml-preflight for Debian
 This package was produced from a source tarball built from the git repository
 at https://github.com/SpineML/SpineML_PreFlight
 
-The git commit revision is: bc2f165 of Thu Jan 14 15:39:40 2016 +0000 on
+The git commit revision is: 939c4c7 of Thu Jan 14 15:41:06 2016 +0000 on
 the release-0.1.0 branch.
