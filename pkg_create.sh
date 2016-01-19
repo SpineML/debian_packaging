@@ -109,17 +109,9 @@ echo ${DEBHELPER_COMPAT_LEVEL} > debian/compat
 
 . ../scripts/debian_rules
 
-# The source readme
-cat > debian/README.source <<EOF
-${PROGRAM_NAME} for Debian
------------------------
-
-This package was produced from a source tarball built from the git repository
-at ${GIT_ACCCOUNT}/${GIT_REPO_DIR}
-
-The git commit revision is: ${GIT_LAST_COMMIT_SHA} of ${GIT_LAST_COMMIT_DATE} on
-the ${GIT_BRANCH} branch.
-EOF
+# The source readme is copied in from a file created by pkg_curatesrc.sh
+cp ../debian_README.source debian/README.source
+if [ "$?" -ne 0 ]; then bailout "failed to copy in debian_README.source"; fi
 
 popd
 

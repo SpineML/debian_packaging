@@ -105,14 +105,28 @@ popd # from $DEBNAME
 
 popd # from src/
 
-# Now create $DEBNAME.tar.gz
-if [ -f $DEBNAME.tar.gz ]; then
-    rm -f $DEBNAME.tar.gz
-fi
-
 # Lastly, create the source package. DEBORIG is usually a copy of the
 # upstream tarball. As I'm creating my upstream tarball from the git
 # repo, I'll generate directly as DEBORIG.tar.gz,
 tar czf $DEBORIG.tar.gz --exclude-vcs -C./src $DEBNAME
+
+# Make the correct length of underline:
+LINESTRING='--------------------------------------------------------------------------------'
+NUMDASHES=$((${#PROGRAM_NAME}+11)) # 11 for " for Debian"
+UNDERLINE=`echo ${LINESTRING:0:${NUMDASHES}}`
+
+# Create the source readme, in a separate file which we'll copy in as
+# debian/README.source when we call pkg_create.sh
+cat > debian_README.source <<EOF
+${PROGRAM_NAME} for Debian
+${UNDERLINE}
+
+This package was produced from a source tarball built from the git repository
+at ${GIT_ACCOUNT}/${GIT_REPO_DIR}
+
+The git commit revision is: ${GIT_LAST_COMMIT_SHA} of ${GIT_LAST_COMMIT_DATE} on
+the ${GIT_BRANCH} branch.
+EOF
+
 
 echo "Source code written into $DEBORIG.tar.gz. Done."
