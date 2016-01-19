@@ -1,0 +1,45 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Tue, 19 Jan 2016 14:36:48 +0000
+Source: spineml-2-brahms
+Binary: spineml-2-brahms
+Architecture: source
+Version: 1.1.0-1
+Distribution: unstable
+Urgency: low
+Maintainer: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Changed-By: Sebastian Scott James <seb.james@sheffield.ac.uk>
+Description:
+ spineml-2-brahms - SpineML to BRAHMS execution backend
+Closes: 742517
+Changes:
+ spineml-2-brahms (1.1.0-1) unstable; urgency=low
+ .
+   * Initial release. (Closes: #742517: ITP: spineml-2-brahms -- Convert
+     SpineML models for)
+Checksums-Sha1:
+ a38451c1e46516b7a69cc8e813231a7a5d462ddf 1485 spineml-2-brahms_1.1.0-1.dsc
+ 41014e8a6918725becc0f9d27ba46bc4bb2aa008 92912 spineml-2-brahms_1.1.0.orig.tar.gz
+ 0aa6683bc135e84426a9ee92f57163f383201464 1788 spineml-2-brahms_1.1.0-1.debian.tar.xz
+Checksums-Sha256:
+ f587c9fa9c4eabfefaf5323753e4b82dea0240e2f61e276e01c57fa5ce84b5d5 1485 spineml-2-brahms_1.1.0-1.dsc
+ e528997a6a1abe04f146ac0be73030ad6c3a031532cca49da1794b887588795f 92912 spineml-2-brahms_1.1.0.orig.tar.gz
+ fd7cf488ad53e89317161120ad262cb5fc4cfb25db967d99a31f215f7d3410cc 1788 spineml-2-brahms_1.1.0-1.debian.tar.xz
+Files:
+ 18f8b5d2f7d53750fb29e8b5b4354698 1485 science optional spineml-2-brahms_1.1.0-1.dsc
+ bb8312c684c5a3f7bef3527f69416c8a 92912 science optional spineml-2-brahms_1.1.0.orig.tar.gz
+ 4c459cd2f008875e869a0b43ac125e1c 1788 science optional spineml-2-brahms_1.1.0-1.debian.tar.xz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWnlDxAAoJEIVhKD7pyNosT3AH/13f0ysU0zmmt4PE+pQz5srd
+ErJuhVfNWxvtSru+YSfj8/jOquGw20MfjAp7AKxZj7HGvqu8hrVja5lGHgupGPAL
+58BLhAtCHZpsKRO/ki9iiKrnTUkX1YPzjEflLx9F/4wOjdkvRS6MW8JuJsoebu8K
+9jApKdRGxdkjTBe/IUy6XTxG6+zZaYKbzSoXgf7wxhjxg1ga1Bj5jyA02dVglx+H
+zVNlV2BD/Fw5Stxzug+lVSkjCdAQ/TQF+pPiNjPN43Z9htJL29fmtS/6gp6a7yk6
+srQyoNzWYbAlLWaQnPTFon13brBMICpkru9djBrdY0LMaMptIVOJQHnP1mbfEdA=
+=ofKh
+-----END PGP SIGNATURE-----

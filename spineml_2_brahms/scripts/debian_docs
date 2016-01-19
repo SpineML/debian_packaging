@@ -1,0 +1,4 @@
+cat > debian/docs <<EOF
+errorMsgLookup.txt
+readme.output_dir
+EOF
