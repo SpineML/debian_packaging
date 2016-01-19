@@ -28,6 +28,14 @@ Architecture: any
 Depends: \${shlibs:Depends}, \${misc:Depends}
 Recommends: xsltproc, gcc, spineml-2-brahms
 Description:  GUI for SpineML.
- Create, visualise and simulate networks of point spiking neural models.
- For use with the SpineML XML format and compatible simulators.
+ Create, visualise and simulate neural network models. SpineCreator makes it
+ possible to lay out a neural network model with boxes and arrows signifying
+ the neural populations and connections. A flexible component editors allows
+ arbitrary models to be used for each neural element. SpineCreator is commonly
+ used to lay out rate-coded, leaky integrate-and-fire and Izhikevich spiking
+ neural networks. SpineCreator writes the model into an XML format called
+ SpineML, which is an extension to the INCF standard format NineML.
+ If a compatible simulator is available (for example spineml-2-brahms) then
+ models can be executed and the results viewed with the built-in graphing
+ functionality.
 EOF
