@@ -81,6 +81,10 @@ fi
 DEBHELPER_COMPAT_LEVEL=9
 echo ${DEBHELPER_COMPAT_LEVEL} > debian/compat
 
+if [ -f ../scripts/debian_docs ]; then
+    . ../scripts/debian_docs
+fi
+
 . ../scripts/debian_control
 
 . ../scripts/debian_lintian_overrides
