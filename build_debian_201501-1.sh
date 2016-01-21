@@ -1,7 +1,9 @@
 #!/bin/bash
 
-echo "Now a little out of date. package.sh needs to be changed for pkg_create.sh"
-#exit 1
+# This script should simply build a set of .debs from an existing set of
+# source packages. The source packages should be done manually, one by one.
+echo "Now out of date. package.sh needs to be changed for pkg_justbuild.sh"
+exit 1
 
 # Builds all 4 packages for a Debian distro (e.g. Jessie)
 

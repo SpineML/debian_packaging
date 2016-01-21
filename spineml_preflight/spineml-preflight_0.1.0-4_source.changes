@@ -19,23 +19,23 @@ Changes:
      * Removes unnecessary README.md patch and corrects short Licence name in
      debian/copyright file
 Checksums-Sha1:
- 97b7fb2a640de1178a9c9b9e1b690d0920857882 1490 spineml-preflight_0.1.0-4.dsc
- 7092258ee2df2f79012d530d76d716f0cf3a17de 1944 spineml-preflight_0.1.0-4.debian.tar.xz
+ 9e426de17746277f23acfc7684b44c8e6d49a6d9 1490 spineml-preflight_0.1.0-4.dsc
+ 7bec23182c2e6872a939797916888f98e810f5a9 1952 spineml-preflight_0.1.0-4.debian.tar.xz
 Checksums-Sha256:
- a3b43a0e889e459be303c7b3bf868873d5d80459413919601a8f28ac50afe0d2 1490 spineml-preflight_0.1.0-4.dsc
- 10dfe94815d3409656308e16caba8644bf02c3ad830b5b5664f8bac3db5653e7 1944 spineml-preflight_0.1.0-4.debian.tar.xz
+ 4752cd285eb6a05d7cf99470a5f17048976ff8fe738ef2e22cbb68688d07f4e2 1490 spineml-preflight_0.1.0-4.dsc
+ 102f27edb930d4cc688dd45b366ade759f0e22fb4ce59f563cd1c1b73c871f65 1952 spineml-preflight_0.1.0-4.debian.tar.xz
 Files:
- 58c25c4f1b01260a2053f3f6dbc5db0b 1490 science optional spineml-preflight_0.1.0-4.dsc
- 8c4332e5a0fbb33c5481d56f829cb691 1944 science optional spineml-preflight_0.1.0-4.debian.tar.xz
+ cf21e1eeb90ef8fea7ded29a156c7c37 1490 science optional spineml-preflight_0.1.0-4.dsc
+ f8fef1b135b385b359bb092e5cbe0e36 1952 science optional spineml-preflight_0.1.0-4.debian.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJWniWyAAoJEIVhKD7pyNosr2UH/3nr+GPuLsNWXbzXVpWXGia2
-eJCkruxUGVp0uZYC1+sGpkKjQdTJg+x5jEhuuRaCYlPiGL2Ai/PU+XlvQ7U7FioD
-I59fNSExKqXuqrFAPZgq0Vz9DUeBRyuT6eaOrJZx8PYHjF0DuoGmkIGGtUSVcs70
-V4jrJCg7A9DTf6sThsZ5pXntyKRiFSDLFg6qV5VaizYtghgz41UxpYgLbCoA3mAN
-cmj7GE0C3KZ8V8ZpyI2bc2BW3Us37KuF7tus1y30sRbkhIjaINSuox43hYbhhlEN
-7ZFZVeJfBHNUqNHAPGdwWiwBqOYsaEH2BnkfT0JFpJLXG0fYr5wMpNsfIrvhwto=
-=l2xc
+iQEcBAEBAgAGBQJWoBjAAAoJEIVhKD7pyNosoP4H+wZGrW1o2vg3VWIbrkUmNjyT
+pZjPRatLv4DMr0lOYT2qmY0AE9sYlGs5Kynf7+I/isoBywSLdHB9+SJVRCUtBMqX
+diF56uzaELs35GSK94ZvGxhAU3E9aZ0cX72lkFuh9XjpFU6xChIImEIUbjI2z7yd
+dmQPstjeXIRXcz00QP5y3FhbCO5FfGfNeMz2gxnYG7BT6C9lIDe+UJs/83YuPW+E
+59TBrOgHBsrEQQAjZbT8jF/kl/T/pDzQUrSDOWgMFGl1amwsQIIqR+6f0g8L1UaF
+uvO6n8DGhmbSMRio9y5vo/Zm4hikx7unE3Av1jCDLdGRZ59CjaniJdRgVr+K/Bs=
+=cFsV
 -----END PGP SIGNATURE-----

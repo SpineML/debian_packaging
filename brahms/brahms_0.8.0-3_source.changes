@@ -19,23 +19,23 @@ Changes:
    * Corrects debian/README.source file so that it contains the correct
      git revision information for the source code.
 Checksums-Sha1:
- 6c1f561d68bb851d4e78c9418cb83bc6cb65ec08 1456 brahms_0.8.0-3.dsc
- bd8157721915b99291b031f41a107d4acdbceac0 2028 brahms_0.8.0-3.debian.tar.xz
+ 95610d7c74e162dd8ba926cf8a06bc1103023db8 1456 brahms_0.8.0-3.dsc
+ df2f2d434721ef6b05b65d44f1dfc8dbb15f6675 2028 brahms_0.8.0-3.debian.tar.xz
 Checksums-Sha256:
- 5ccf757a980c3e8027cafd77163ae226a0e452469b549e24059deee97ea725d4 1456 brahms_0.8.0-3.dsc
- ad36d19ea0dfb77fd776cb2924f3372ce00b85786cd91136205ed4df2c997f61 2028 brahms_0.8.0-3.debian.tar.xz
+ 15c3f75ef9451e17185cc36d102e5c5475f52163b976cca187eb7fc7da169c25 1456 brahms_0.8.0-3.dsc
+ 03c5ec67ac035f787e37f3d33ca1830a1fc7f67a7c9b57c7274db61413625b51 2028 brahms_0.8.0-3.debian.tar.xz
 Files:
- 1fb1460679983fbc1562ef1528bf7a58 1456 science optional brahms_0.8.0-3.dsc
- b1e59866501d62bbeb6830f265c5a3ce 2028 science optional brahms_0.8.0-3.debian.tar.xz
+ 95023e805f2b6a2d139eca89688cb516 1456 science optional brahms_0.8.0-3.dsc
+ e7aacaf30b88c1f39639e636bc08267c 2028 science optional brahms_0.8.0-3.debian.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJWngpBAAoJEIVhKD7pyNosBPYH/3J1bVM9Us8dnXFRNmk2UEMr
-GO0pP2MkzZSaQR0ML9Mw1lFRr6ATLQrs2MaRnm1KcTnB1/13srcRa4iyYneruAFq
-yZECCq9iFZV2J+zm4LZwH2IAhwCthRIQhW8frA1XQH5rvWnSrMqYQzc+bA21QLEu
-L8ou0d9Q6UhcgmZw7KuFYOmGjKMAv//C86w85HqiASXx0/kIDIioZTWeUuPi+shw
-kDD83SIqKbN92ust/2qRJyvlwbXdYGuAHpL7s1wMVTtL3+ykdR6N7FgSkVbpeNDb
-0Ad6HH4E77gha98NII7ZwOVHalyoXNssZNRETiTHQ+3w80aA+xtqgpbCRveFz5M=
-=LSBt
+iQEcBAEBAgAGBQJWoBcQAAoJEIVhKD7pyNoseOEH/2UUW9d7BJL/y+kUmBY3F2OC
+lHXNNzhmsI4cXqifxXrOpuGrlvl6yBBSlKl1LpZ8rP6zsNyxcLzXvngZzU6IngjJ
+wQFTJuLQVCwMQCUR0uJS4kaECFgblOeGYMswZCUC/XArMhj04fyjn68M/197ELlg
+g2fY9wLOGxL4CIBwPQWTheg/nZijrqhjzAVq38H3tmICVeZjgCTGGn5hdcrFkKzd
+kcqwncI8CmgSSKlBxYBEGhpxq7W1MszutCG4q+eBEq4lrQRh9kC9LB9Td66EXoOV
+mR32kaUyc6sejQ1sdcmJ76sLG51pNgNfcbHyqm/+7qKshyejcMF0TnWjd3BKhTo=
+=Qoya
 -----END PGP SIGNATURE-----

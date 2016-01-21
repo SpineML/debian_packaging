@@ -1,0 +1,8 @@
+spinecreator for Debian
+-----------------------
+
+This package was produced from a source tarball built from the git repository
+at https://github.com/SpineML/SpineCreator
+
+The git commit revision is: 7881ef7 of Sat Jan 9 12:50:38 2016 +0000 on
+the release-0.9.6 branch.

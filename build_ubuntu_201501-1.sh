@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# This script should simply build a set of .debs from an existing set of
+# source packages. The source packages should be done manually, one by one.
+# In practice, the building for Ubuntu is best done on launchpad.net.
+echo "Now out of date. package.sh needs to be changed for pkg_justbuild.sh"
+exit 1
+
 # Builds all 4 packages for an Ubuntu Distro. Just pass in the distro
 # name (e.g. trusty)
 
